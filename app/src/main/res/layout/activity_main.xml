@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/appbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mt_hint="@string/cari"
+        app:mt_speechMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:elevation="1dp"
+        app:mt_searchBarColor="@color/cardview_shadow_end_color"
+        android:background="@drawable/bg_search"
+        tools:ignore="PrivateResource" />
+
+    <include layout="@layout/mapbox_main"/>
+
+    <RelativeLayout
+        android:id="@+id/list_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="90dp"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pelanggan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_row_pelanggan" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="469dp"
+            android:text="@string/start_navigation"
+            android:textSize="50sp" />
+
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
