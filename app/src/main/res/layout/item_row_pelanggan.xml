@@ -8,11 +8,20 @@
 
     <LinearLayout
         android:id="@+id/ll_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="265dp"
+        android:layout_height="138dp"
         android:layout_centerVertical="true"
         android:orientation="vertical"
         tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tv_item_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="@string/nama_pelanggan" />
 
         <TextView
             android:id="@+id/tv_item_nama"
@@ -24,12 +33,61 @@
             tools:text="@string/nama_pelanggan" />
 
         <TextView
-            android:id="@+id/tv_item_alamat"
+            android:id="@+id/tv_item_alamat_pemesan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
             tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_alamat_dikirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_keterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_telepon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            tools:text="@string/alamat_dikirim" />
+
 
         <View
             android:layout_width="match_parent"

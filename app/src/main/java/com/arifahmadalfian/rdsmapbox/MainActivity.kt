@@ -2,6 +2,7 @@ package com.arifahmadalfian.rdsmapbox
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -140,24 +141,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         //searchBar?.lastSuggestions = suggestList
 
         val suggestListAlamat = database?.alamatdikirim
-        searchBar?.lastSuggestions = suggestListAlamat
+        searchBar?.lastSuggestions = suggestListAlamat?.take(5)
 
         searchBar?.addTextChangeListener(object: TextWatcher{
             @SuppressLint("DefaultLocale")
             override fun afterTextChanged(s: Editable?) {
-                val suggest: MutableList<String> = ArrayList()
-                suggestListAlamat?.forEach { search ->
-                    if(search.toLowerCase().contains(searchBar?.text?.toLowerCase().toString())){
-                        suggest.add(search)
-                    }
-                }
-                searchBar?.lastSuggestions = suggest
             }
 
             @SuppressLint("DefaultLocale")
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                list_main.visibility = View.VISIBLE
-                mapbox_main.visibility = View.GONE
             }
 
             @SuppressLint("DefaultLocale")
@@ -169,6 +161,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
                     }
                 }
                 searchBar?.lastSuggestions = suggest
+
             }
 
         })
@@ -186,6 +179,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 startSearch(text.toString())
+                list_main.visibility = View.VISIBLE
+                mapbox_main.visibility = View.GONE
             }
 
         })
@@ -194,6 +189,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     private fun startSearch(text: String) {
         adapter = database?.getPelangganByAlamatDikirim(text)?.let { SearchAdapter(this, it) }
         recyclerView?.adapter = adapter
+
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {

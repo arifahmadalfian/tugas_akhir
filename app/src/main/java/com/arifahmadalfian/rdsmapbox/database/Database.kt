@@ -108,10 +108,10 @@ class Database(context: Context?) : SQLiteAssetHelper(
             "nama",
             "alamat_pemesan",
             "alamat_dikirim",
-            "latitude",
-            "longitude",
+            "longitudes",
+            "latitudes",
             "keterangan",
-            "photo",
+            "poto",
             "telepon"
         )
         val tableName = "Pelanggan" //nama tabelnya
@@ -133,10 +133,10 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     nama = cursor.getString(cursor.getColumnIndex("nama")),
                     alamat_pemesan = cursor.getString(cursor.getColumnIndex("alamat_pemesan")),
                     alamat_dikirim = cursor.getString(cursor.getColumnIndex("alamat_dikirim")),
-                    latitude = cursor.getDouble(cursor.getColumnIndex("latitude")),
-                    longitude = cursor.getDouble(cursor.getColumnIndex("longitude")),
+                    longitude = cursor.getDouble(cursor.getColumnIndex("longitudes")),
+                    latitude = cursor.getDouble(cursor.getColumnIndex("latitudes")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = cursor.getInt(cursor.getColumnIndex("photo")),
+                    photo = cursor.getInt(cursor.getColumnIndex("poto")),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                 )
                 result.add(pelanggan)

@@ -13,8 +13,16 @@ class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): Recyc
 
 
     inner class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        var id: TextView = itemView.findViewById(R.id.tv_item_id)
         var nama: TextView = itemView.findViewById(R.id.tv_item_nama)
-        var alamat: TextView = itemView.findViewById(R.id.tv_item_alamat)
+        var alamatPemesan: TextView = itemView.findViewById(R.id.tv_item_alamat_pemesan)
+        var alamatDikirim: TextView = itemView.findViewById(R.id.tv_item_alamat_dikirim)
+        var latitude: TextView = itemView.findViewById(R.id.tv_item_latitude)
+        var longitude: TextView = itemView.findViewById(R.id.tv_item_longitude)
+        var keterangan: TextView = itemView.findViewById(R.id.tv_item_keterangan)
+        var photo: TextView = itemView.findViewById(R.id.tv_item_photo)
+        var telepon: TextView = itemView.findViewById(R.id.tv_item_telepon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -28,7 +36,14 @@ class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): Recyc
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        holder.id.text = pelanggan[position].id.toString()
         holder.nama.text = pelanggan[position].nama
-        holder.alamat.text = pelanggan[position].alamat_dikirim
+        holder.alamatPemesan.text = pelanggan[position].alamat_pemesan
+        holder.alamatDikirim.text = pelanggan[position].alamat_dikirim
+        holder.latitude.text = pelanggan[position].latitude.toString()
+        holder.longitude.text = pelanggan[position].longitude.toString()
+        holder.keterangan.text = pelanggan[position].keterangan
+        holder.photo.text = pelanggan[position].photo.toString()
+        holder.telepon.text = pelanggan[position].telepon
     }
 }

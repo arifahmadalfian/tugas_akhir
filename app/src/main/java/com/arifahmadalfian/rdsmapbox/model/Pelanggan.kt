@@ -9,8 +9,8 @@ data class Pelanggan (
     var nama: String,
     var alamat_pemesan: String,
     var alamat_dikirim: String,
-    var latitude: Double,
     var longitude: Double,
+    var latitude: Double,
     var keterangan: String,
     var photo: Int,
     var telepon: String
