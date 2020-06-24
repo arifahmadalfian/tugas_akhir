@@ -24,28 +24,5 @@
 
     <include layout="@layout/mapbox_main"/>
 
-    <RelativeLayout
-        android:id="@+id/list_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="90dp"
-        android:visibility="gone">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_pelanggan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_row_pelanggan" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="469dp"
-            android:text="@string/start_navigation"
-            android:textSize="50sp" />
-
-
-    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -115,9 +115,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
 
-        list_main.visibility = View.GONE
-        mapbox_main.visibility = View.VISIBLE
-
         recyclerView = findViewById(R.id.rv_pelanggan)
         layoutManager = LinearLayoutManager(this)
         recyclerView?.layoutManager = layoutManager
@@ -179,16 +176,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 startSearch(text.toString())
-                list_main.visibility = View.VISIBLE
-                mapbox_main.visibility = View.GONE
+
             }
 
         })
     }
 
     private fun startSearch(text: String) {
-        adapter = database?.getPelangganByAlamatDikirim(text)?.let { SearchAdapter(this, it) }
-        recyclerView?.adapter = adapter
+        //adapter = database?.getPelangganByAlamatDikirim(text)?.let { SearchAdapter(this, it) }
+        val teks = text
+        val moveTextPelanggan = Intent(this@MainActivity, DetailActivity::class.java)
+        moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, teks)
+        startActivity(moveTextPelanggan)
+
+        //recyclerView?.adapter = adapter
 
     }
 
@@ -398,12 +399,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     }
 
     private fun getActionLogout() {
-        list_main.visibility = View.GONE
+        //list_main.visibility = View.GONE
         mapbox_main.visibility = View.VISIBLE
     }
 
     private fun getActionAbout() {
-        list_main.visibility = View.VISIBLE
+       // list_main.visibility = View.VISIBLE
         mapbox_main.visibility = View.GONE
     }
 

@@ -40,8 +40,8 @@ class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): Recyc
         holder.nama.text = pelanggan[position].nama
         holder.alamatPemesan.text = pelanggan[position].alamat_pemesan
         holder.alamatDikirim.text = pelanggan[position].alamat_dikirim
-        holder.latitude.text = pelanggan[position].latitude.toString()
         holder.longitude.text = pelanggan[position].longitude.toString()
+        holder.latitude.text = pelanggan[position].latitude.toString()
         holder.keterangan.text = pelanggan[position].keterangan
         holder.photo.text = pelanggan[position].photo.toString()
         holder.telepon.text = pelanggan[position].telepon
