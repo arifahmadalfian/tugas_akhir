@@ -30,10 +30,10 @@ class DetailActivity : AppCompatActivity() {
 
         database = Database(this)
 
-        val name = intent.getStringExtra(Extra_pelanggan)
+        val pelanggan = intent.getStringExtra(Extra_pelanggan)
 
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        adapter = database?.getPelangganByAlamatDikirim(name)?.let { SearchAdapter(this, it) }
+        adapter = database?.getPelangganByAlamatDikirim(pelanggan)?.let { SearchAdapter(it) }
         recyclerView?.adapter = adapter
     }
 }

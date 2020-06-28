@@ -1,12 +1,10 @@
 package com.arifahmadalfian.rdsmapbox.adapter
 
-import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
@@ -15,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_row_pelanggan.view.*
 import kotlinx.android.synthetic.main.layout_alamat.view.*
 
-class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(var pelanggan: List<Pelanggan>): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
 
     inner class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,10 +31,14 @@ class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): Recyc
 
         fun bind(pelanggan: Pelanggan) {
             with(itemView) {
+/*
                 Glide.with(itemView.context)
                     .load(pelanggan.photo)
-                    .apply(RequestOptions())
+                    .apply(RequestOptions().override(100,100))
                     .into(tv_item_photo)
+
+ */
+
 
                 tv_item_nama.text = pelanggan.nama
                 tv_item_alamat_pemesan.text = pelanggan.alamat_pemesan
@@ -45,6 +47,7 @@ class SearchAdapter(var context: Context, var pelanggan: List<Pelanggan>): Recyc
                 tv_item_longitude.text = pelanggan.longitude.toString()
                 tv_item_keterangan.text = pelanggan.keterangan
                 tv_item_telepon.text = pelanggan.telepon
+                tv_item_photo.setImageBitmap(pelanggan.photo)
             }
         }
 
