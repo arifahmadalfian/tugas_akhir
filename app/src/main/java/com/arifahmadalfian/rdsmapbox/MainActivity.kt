@@ -43,7 +43,6 @@ import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.mapbox_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -183,14 +182,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     }
 
     private fun startSearch(text: String) {
-        //adapter = database?.getPelangganByAlamatDikirim(text)?.let { SearchAdapter(this, it) }
-        val teks = text
-        val moveTextPelanggan = Intent(this@MainActivity, DetailActivity::class.java)
-        moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, teks)
-        startActivity(moveTextPelanggan)
-
-        //recyclerView?.adapter = adapter
-
+        if (text.isNotEmpty()){
+            val moveTextPelanggan = Intent(this@MainActivity, DetailActivity::class.java)
+            moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, text)
+            startActivity(moveTextPelanggan)
+        }
+        else{
+            Toast.makeText(this@MainActivity, "Pencarian tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
