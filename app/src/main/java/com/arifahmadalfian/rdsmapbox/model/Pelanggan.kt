@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Pelanggan (
+data class Pelanggan(
     var id: Int,
     var nama: String,
     var alamat_pemesan: String,
@@ -12,7 +12,7 @@ data class Pelanggan (
     var longitude: Double,
     var latitude: Double,
     var keterangan: String,
-    var photo: Int,
+    var photo: ByteArray,
     var telepon: String
 ) : Parcelable {
 

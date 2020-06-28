@@ -45,7 +45,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     latitude = cursor.getDouble(cursor.getColumnIndex("latitude")),
                     longitude = cursor.getDouble(cursor.getColumnIndex("longitude")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = cursor.getInt(cursor.getColumnIndex("photo")),
+                    photo = cursor.getBlob(cursor.getColumnIndex("photo")),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                     )
                     result.add(pelanggan)
@@ -136,7 +136,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     longitude = cursor.getDouble(cursor.getColumnIndex("longitudes")),
                     latitude = cursor.getDouble(cursor.getColumnIndex("latitudes")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = cursor.getInt(cursor.getColumnIndex("poto")),
+                    photo = cursor.getBlob(cursor.getColumnIndex("poto")),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                 )
                 result.add(pelanggan)
@@ -182,7 +182,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     latitude = cursor.getDouble(cursor.getColumnIndex("latitude")),
                     longitude = cursor.getDouble(cursor.getColumnIndex("longitude")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = cursor.getInt(cursor.getColumnIndex("photo")),
+                    photo = cursor.getBlob(cursor.getColumnIndex("photo")),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                 )
                 result.add(pelanggan)
