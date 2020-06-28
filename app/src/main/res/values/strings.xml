@@ -15,6 +15,13 @@
     <string name="alamat_dikirim">Alamat Dikirim</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
+    <string name="jam_istirahat">Jam Istirahat</string>
+    <string name="alamat_pelanggan">Alamat Pelanggan</string>
+    <string name="alamat_pemesan">Alamat Pemesan</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="telepon">Telepon</string>
+    <string name="detail">Detail</string>
 
     <string-array name="query_sugestion">
         <item>Furniture</item>
