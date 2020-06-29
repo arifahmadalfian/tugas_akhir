@@ -13,4 +13,6 @@
     <color name="mapboxRed">#b43b71</color>
 
     <color name="lines">#FF5722</color>
+    <color name="search">#000000</color>
+
 </resources>

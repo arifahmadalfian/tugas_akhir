@@ -58,7 +58,7 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener, OnMapClickListener,
-    PopupMenu.OnMenuItemClickListener{
+    PopupMenu.OnMenuItemClickListener {
     // variables for adding location layer
     private var mapView: MapView? = null
     private var mapboxMap: MapboxMap? = null
@@ -127,10 +127,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         searchBar = findViewById(R.id.appbar_search)
 
         database = Database(this)
-        searchBar?.setHint("Cari Pelanggan")
 
-        //searchBar?.inflateMenu(R.menu.main_menu);
-        //searchBar?.menu
+        searchBar?.inflateMenu(R.menu.main_menu);
+        searchBar?.menu?.setOnMenuItemClickListener(this)
 
         // saat pencarian di tekan maka sugesti dari nama pelanggan akan muncul
         //val suggestList = database?.nama
@@ -407,41 +406,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         mapbox_main.visibility = View.GONE
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_about -> {
-                getActionAbout()
-                true
-            }
-            R.id.action_logout -> {
-                getActionLogout()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
-    }
-
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-        var x = false
-        when (item?.itemId) {
+        return when (item?.itemId) {
             R.id.action_about -> {
-                getActionAbout()
-                x = true
-                return x
+                Toast.makeText(this@MainActivity, " Ini action about", Toast.LENGTH_SHORT).show()
+                return true
             }
             R.id.action_logout -> {
-                getActionLogout()
-                x = true
-                return x
+                Toast.makeText(this@MainActivity, " Ini action logout", Toast.LENGTH_SHORT).show()
+                return true
             }
-
+            else -> false
         }
-        return x
     }
 
 
 }
+
+
+
 
 
 
