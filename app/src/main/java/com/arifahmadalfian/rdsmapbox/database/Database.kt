@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteQueryBuilder
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.util.*
@@ -14,7 +15,6 @@ class Database(context: Context?) : SQLiteAssetHelper(
     null,
     DB_VER
 ) {
-
     val alamatdikirim: List<String>
         get() {
             val db = readableDatabase
@@ -68,8 +68,8 @@ class Database(context: Context?) : SQLiteAssetHelper(
 
         if (cursor.moveToFirst()) {
             do {
-                val img = cursor.getBlob(8)
-                val bt: Bitmap = BitmapFactory.decodeByteArray(img, 0, img.size-1)
+                var img = cursor.getBlob(cursor.getColumnIndex("poto"))
+                var bt: Bitmap = BitmapFactory.decodeByteArray(img, 0, img.size-0)
                 val pelanggan = Pelanggan(
                     id = cursor.getInt(cursor.getColumnIndex("id")),
                     nama = cursor.getString(cursor.getColumnIndex("nama")),

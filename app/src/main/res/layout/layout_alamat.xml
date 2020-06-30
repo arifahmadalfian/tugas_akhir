@@ -6,15 +6,31 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/text_alamat"
+        android:id="@+id/text_keterangan"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/detail"
+        android:text="@string/jam_istirahat"
         android:textStyle="bold"
+        android:textColor="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_keterangan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/jam_istirahat"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/text_alamat_pemesan"
@@ -24,7 +40,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/alamat_pemesan"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_alamat" />
+        app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
 
     <TextView
         android:id="@+id/tv_item_alamat_pemesan"
@@ -36,7 +52,7 @@
         android:text="@string/alamat_pemesan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/text_alamat" />
+        app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
 
     <TextView
         android:id="@+id/text_alamat_dikirim"

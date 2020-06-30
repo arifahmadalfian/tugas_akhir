@@ -23,6 +23,7 @@
     <string name="telepon">Telepon</string>
     <string name="detail">Detail</string>
     <string name="selesai">Selesai</string>
+    <string name="activity_about">activity About</string>
 
     <string-array name="query_sugestion">
         <item>Furniture</item>

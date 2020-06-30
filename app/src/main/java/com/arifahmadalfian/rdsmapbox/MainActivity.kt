@@ -402,14 +402,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     }
 
     private fun getActionAbout() {
-       // list_main.visibility = View.VISIBLE
-        mapbox_main.visibility = View.GONE
+       val intent = Intent(this@MainActivity,AboutActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.action_about -> {
-                Toast.makeText(this@MainActivity, " Ini action about", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
+                getActionAbout()
                 return true
             }
             R.id.action_logout -> {

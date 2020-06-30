@@ -14,5 +14,6 @@
 
     <color name="lines">#FF5722</color>
     <color name="search">#000000</color>
+    <color name="red">#FF1100</color>
 
 </resources>
