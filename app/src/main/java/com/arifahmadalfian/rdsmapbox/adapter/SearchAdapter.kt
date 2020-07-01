@@ -1,15 +1,11 @@
 package com.arifahmadalfian.rdsmapbox.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_row_pelanggan.view.*
 import kotlinx.android.synthetic.main.layout_alamat.view.*
 

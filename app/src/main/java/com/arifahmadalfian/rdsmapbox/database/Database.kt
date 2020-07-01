@@ -1,10 +1,10 @@
 package com.arifahmadalfian.rdsmapbox.database
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteQueryBuilder
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.widget.Toast
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.util.*
@@ -64,12 +64,15 @@ class Database(context: Context?) : SQLiteAssetHelper(
             null,
             null
         )
+
+
         val result: MutableList<Pelanggan> = ArrayList()
 
         if (cursor.moveToFirst()) {
             do {
-                var img = cursor.getBlob(cursor.getColumnIndex("poto"))
-                var bt: Bitmap = BitmapFactory.decodeByteArray(img, 0, img.size-0)
+                val img: ByteArray = cursor.getBlob(7)
+                //val bt: Bitmap = BitmapFactory.decodeByteArray(img,0,img.size)
+
                 val pelanggan = Pelanggan(
                     id = cursor.getInt(cursor.getColumnIndex("id")),
                     nama = cursor.getString(cursor.getColumnIndex("nama")),
@@ -78,10 +81,9 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     longitude = cursor.getDouble(cursor.getColumnIndex("longitudes")),
                     latitude = cursor.getDouble(cursor.getColumnIndex("latitudes")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = bt,
+                    photo = BitmapFactory.decodeByteArray(img,0,img.size),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                 )
-
                 result.add(pelanggan)
             } while (cursor.moveToNext())
         }
