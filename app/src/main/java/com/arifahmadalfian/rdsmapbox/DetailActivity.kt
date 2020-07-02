@@ -33,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
         val pelanggan = intent.getStringExtra(Extra_pelanggan)
 
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        adapter = database?.getPelangganByAlamatDikirim(pelanggan)?.let { SearchAdapter(it) }
+        adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it) }
         recyclerView?.adapter = adapter
     }
 }

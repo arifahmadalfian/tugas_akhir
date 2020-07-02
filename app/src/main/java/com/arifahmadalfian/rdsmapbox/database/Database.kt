@@ -5,6 +5,11 @@ import android.content.Context
 import android.database.sqlite.SQLiteQueryBuilder
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BitmapFactory.Options
+import android.graphics.drawable.VectorDrawable
+import android.util.MutableByte
+import android.widget.Toast
+import androidx.core.database.getBlobOrNull
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.util.*
@@ -15,6 +20,9 @@ class Database(context: Context?) : SQLiteAssetHelper(
     null,
     DB_VER
 ) {
+    val kontek: Context? = context
+
+
     val alamatdikirim: List<String>
         get() {
             val db = readableDatabase
@@ -90,6 +98,51 @@ class Database(context: Context?) : SQLiteAssetHelper(
         return result
     }
 
+    @SuppressLint("Recycle")
+    fun getPelangganByAlamat(alamatDikirim: String): List<Pelanggan>?{
+        val result: MutableList<Pelanggan> = ArrayList()
+        val db = readableDatabase
+        if (db != null) {
+            val cursor = db.rawQuery(
+                "SELECT * FROM Pelanggan WHERE alamat_dikirim LIKE '%$alamatDikirim%'",
+                null
+            )
+            if(cursor.count != 0) {
+                while (cursor.moveToNext()){
+                    val id = cursor.getInt(0)
+                    val nama = cursor.getString(1)
+                    val alamat_pemesan= cursor.getString(2)
+                    val alamat_dikirim = cursor.getString(3)
+                    val longitude = cursor.getDouble(4)
+                    val latitude = cursor.getDouble(5)
+                    val keterangan = cursor.getString(6)
+                    val img = cursor.getBlob( 7)
+                    img.toMutableList()
+                    val poto: Bitmap = BitmapFactory.decodeByteArray(img,0, img.size-0)
+                    val telepon = cursor.getString(8)
+                    val pelanggan = Pelanggan(
+                        id ,
+                        nama ,
+                        alamat_pemesan,
+                        alamat_dikirim,
+                        longitude,
+                        latitude ,
+                        keterangan,
+                        poto,
+                        telepon
+                    )
+                    result.add(pelanggan)
+                }
+            } else {
+                Toast.makeText(kontek, "Data tidak ada", Toast.LENGTH_SHORT).show()
+                return null
+            }
+        } else {
+            Toast.makeText(kontek, "Data tidak ada", Toast.LENGTH_SHORT).show()
+            return null
+        }
+        return result
+    }
 
     companion object {
         private const val DB_NAME = "rds.db"
