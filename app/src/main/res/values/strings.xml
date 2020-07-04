@@ -24,6 +24,7 @@
     <string name="detail">Detail</string>
     <string name="selesai">Selesai</string>
     <string name="activity_about">activity About</string>
+    <string name="pt_ronadamar_sejahtera">PT Ronadamar Sejahtera</string>
 
     <string-array name="query_sugestion">
         <item>Furniture</item>
