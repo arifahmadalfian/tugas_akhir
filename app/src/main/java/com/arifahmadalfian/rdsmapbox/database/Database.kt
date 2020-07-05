@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteQueryBuilder
 import android.widget.Toast
-import androidx.core.database.getBlobOrNull
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper
 import java.util.*
@@ -73,7 +72,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
 
         if (cursor.moveToFirst()) {
             do {
-                val img: ByteArray = cursor.getBlob(7)
+               // val img: ByteArray = cursor.getBlob(7)
                 //val bt: Bitmap = BitmapFactory.decodeByteArray(img,0,img.size)
 
                 val pelanggan = Pelanggan(
@@ -99,30 +98,22 @@ class Database(context: Context?) : SQLiteAssetHelper(
         val db = readableDatabase
         if (db != null) {
             val cursor = db.rawQuery(
-                "SELECT * FROM Pelanggan WHERE alamat_dikirim LIKE '%$alamatDikirim%'",
+                "SELECT id, nama, alamat_pemesan, alamat_dikirim, longitudes, latitudes, keterangan, poto, telepon FROM Pelanggan WHERE alamat_dikirim LIKE '%$alamatDikirim%'",
                 null
             )
             if(cursor.count != 0) {
                 while (cursor.moveToNext()){
-                    val id = cursor.getInt(0)
-                    val nama = cursor.getString(1)
-                    val alamat_pemesan= cursor.getString(2)
-                    val alamat_dikirim = cursor.getString(3)
-                    val longitude = cursor.getDouble(4)
-                    val latitude = cursor.getDouble(5)
-                    val keterangan = cursor.getString(6)
-                    val poto = cursor.getBlob( 7)
-                    val telepon = cursor.getString(8)
+
                     val pelanggan = Pelanggan(
-                        id ,
-                        nama ,
-                        alamat_pemesan,
-                        alamat_dikirim,
-                        longitude,
-                        latitude ,
-                        keterangan,
-                        poto,
-                        telepon
+                        id = cursor.getInt(0),
+                        nama = cursor.getString(1),
+                        alamat_pemesan = cursor.getString(2),
+                        alamat_dikirim = cursor.getString(3),
+                        longitude = cursor.getDouble(4),
+                        latitude = cursor.getDouble(5),
+                        keterangan = cursor.getString(6),
+                        photo = cursor.getBlob(7),
+                        telepon = cursor.getString(8)
                     )
                     result.add(pelanggan)
                 }
