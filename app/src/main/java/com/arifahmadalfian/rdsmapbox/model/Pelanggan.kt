@@ -1,6 +1,5 @@
 package com.arifahmadalfian.rdsmapbox.model
 
-import android.graphics.Bitmap
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -13,8 +12,6 @@ data class Pelanggan(
     var longitude: Double,
     var latitude: Double,
     var keterangan: String,
-    var photo: Bitmap,
+    var photo: ByteArray,
     var telepon: String
-) : Parcelable {
-
-}
+) : Parcelable {}

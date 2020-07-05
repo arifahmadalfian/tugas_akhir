@@ -1,5 +1,7 @@
 package com.arifahmadalfian.rdsmapbox.adapter
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,13 +36,15 @@ class SearchAdapter(var pelanggan: List<Pelanggan>): RecyclerView.Adapter<Search
                     .into(tv_item_photo)
 
  */
+                val img = pelanggan.photo
+                val poto = BitmapFactory.decodeByteArray(img,0, img.size-0)
                 tv_item_nama.text = pelanggan.nama
                 tv_item_alamat_pemesan.text = pelanggan.alamat_pemesan
                 tv_item_alamat_dikirim.text = pelanggan.alamat_dikirim
                 tv_item_latitude.text = pelanggan.latitude.toString()
                 tv_item_longitude.text = pelanggan.longitude.toString()
                 tv_item_keterangan.text = pelanggan.keterangan
-                tv_item_photo.setImageBitmap(pelanggan.photo)
+                tv_item_photo.setImageBitmap(poto)
                 tv_item_telepon.text = pelanggan.telepon
             }
         }

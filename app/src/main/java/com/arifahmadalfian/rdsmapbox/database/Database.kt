@@ -3,11 +3,6 @@ package com.arifahmadalfian.rdsmapbox.database
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteQueryBuilder
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.BitmapFactory.Options
-import android.graphics.drawable.VectorDrawable
-import android.util.MutableByte
 import android.widget.Toast
 import androidx.core.database.getBlobOrNull
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
@@ -89,7 +84,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     longitude = cursor.getDouble(cursor.getColumnIndex("longitudes")),
                     latitude = cursor.getDouble(cursor.getColumnIndex("latitudes")),
                     keterangan = cursor.getString(cursor.getColumnIndex("keterangan")),
-                    photo = BitmapFactory.decodeByteArray(img,0,img.size),
+                    photo = cursor.getBlob(7),
                     telepon = cursor.getString(cursor.getColumnIndex("telepon"))
                 )
                 result.add(pelanggan)
@@ -116,9 +111,7 @@ class Database(context: Context?) : SQLiteAssetHelper(
                     val longitude = cursor.getDouble(4)
                     val latitude = cursor.getDouble(5)
                     val keterangan = cursor.getString(6)
-                    val img = cursor.getBlob( 7)
-                    img.toMutableList()
-                    val poto: Bitmap = BitmapFactory.decodeByteArray(img,0, img.size-0)
+                    val poto = cursor.getBlob( 7)
                     val telepon = cursor.getString(8)
                     val pelanggan = Pelanggan(
                         id ,
