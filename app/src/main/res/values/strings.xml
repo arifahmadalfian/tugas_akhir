@@ -20,5 +20,7 @@
     <string name="telepon">Telepon</string>
     <string name="selesai">Selesai</string>
     <string name="pt_ronadamar_sejahtera">PT Ronadamar Sejahtera</string>
+    <string name="mapbox">Mapbox</string>
+    <string name="google_maps">Google Maps</string>
 
 </resources>

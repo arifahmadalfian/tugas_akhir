@@ -11,7 +11,6 @@ import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.bumptech.glide.request.transition.BitmapTransitionFactory
 import kotlinx.android.synthetic.main.item_row_pelanggan.view.*
-import kotlinx.android.synthetic.main.layout_alamat.view.*
 
 class SearchAdapter(var pelanggan: List<Pelanggan>): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
