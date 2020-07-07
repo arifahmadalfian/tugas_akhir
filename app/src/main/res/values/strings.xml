@@ -3,11 +3,9 @@
 
     <string name="mapbox_access" translatable="false">
         pk.eyJ1IjoiYXJpZmFobWFkYWxmaWFuIiwiYSI6ImNrYmVzc29kajBvbnAycW0yNDl0MTZvMWEifQ.AhBe0NApVwrYE1H4SNnP-A</string>
-    <string name="mapbox">sk.eyJ1IjoiYXJpZmFobWFkYWxmaWFuIiwiYSI6ImNrYmV4Mjd2NjBweGoyc3M3aGc2cGp1bzcifQ.AjIxHeR0D_scxjH6f9Djaw</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="start_navigation">Start Navigation</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
-    <string name="directions_activity_toast_message">pesan</string>
     <string name="cari">Cari Pelanggan</string>
 
 
@@ -16,23 +14,11 @@
     <string name="logout">Logout</string>
     <string name="about">About</string>
     <string name="jam_istirahat">Jam Istirahat</string>
-    <string name="alamat_pelanggan">Alamat Pelanggan</string>
     <string name="alamat_pemesan">Alamat Pemesan</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="telepon">Telepon</string>
-    <string name="detail">Detail</string>
     <string name="selesai">Selesai</string>
-    <string name="activity_about">activity About</string>
     <string name="pt_ronadamar_sejahtera">PT Ronadamar Sejahtera</string>
 
-    <string-array name="query_sugestion">
-        <item>Furniture</item>
-        <item>fashion</item>
-        <item>Hotels</item>
-        <item>electronic</item>
-        <item>Hallo</item>
-        <item>service</item>
-        <item>Komputer</item>
-    </string-array>
 </resources>

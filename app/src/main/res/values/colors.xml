@@ -10,10 +10,7 @@
 
     <color name="mapboxPink">#ee4e8b</color>
     <color name="mapboxYellow">#d9d838</color>
-    <color name="mapboxRed">#b43b71</color>
 
-    <color name="lines">#FF5722</color>
-    <color name="search">#000000</color>
     <color name="red">#FF1100</color>
 
 </resources>

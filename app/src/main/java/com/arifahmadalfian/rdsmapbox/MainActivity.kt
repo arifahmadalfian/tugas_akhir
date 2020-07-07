@@ -249,60 +249,56 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     private fun getRoute(
         origin: Point,
         destination: Point
-    ) {
-        NavigationRoute.builder(this)
-            .accessToken(Mapbox.getAccessToken()!!)
-            .origin(origin)
-            .destination(destination)
-            .build()
-            .getRoute(object : Callback<DirectionsResponse?> {
-                @SuppressLint("LogNotTimber")
-                override fun onResponse(
-                    call: Call<DirectionsResponse?>,
-                    response: Response<DirectionsResponse?>
-                ) {
-                    // You can get the generic HTTP info about the response
-                    Log.d(
+    ) = NavigationRoute.builder(this)
+        .accessToken(Mapbox.getAccessToken()!!)
+        .origin(origin)
+        .destination(destination)
+        .build()
+        .getRoute(object: Callback<DirectionsResponse>{
+            @SuppressLint("LogNotTimber")
+            override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
+                Log.e(TAG, "Error:" + t.message)
+            }
+
+            @SuppressLint("LogNotTimber")
+            override fun onResponse(
+                call: Call<DirectionsResponse>,
+                response: Response<DirectionsResponse>
+            ) {
+                // You can get the generic HTTP info about the response
+                Log.d(
+                    TAG,
+                    "Response code: " + response.code()
+                )
+                if (response.body() == null) {
+                    Log.e(
                         TAG,
-                        "Response code: " + response.code()
+                        "No routes found, make sure you set the right user and access token."
                     )
-                    if (response.body() == null) {
-                        Log.e(
-                            TAG,
-                            "No routes found, make sure you set the right user and access token."
+                    return
+                } else if (response.body()!!.routes().size < 1) {
+                    Log.e(TAG, "No routes found")
+                    return
+                }
+                currentRoute = response.body()!!.routes()[0]
+
+                // Draw the route on the map
+                if (navigationMapRoute != null) {
+                    @Suppress("DEPRECATION")
+                    navigationMapRoute!!.removeRoute()
+                } else {
+                    navigationMapRoute =
+                        NavigationMapRoute(
+                            null,
+                            mapView!!,
+                            mapboxMap!!,
+                            R.style.NavigationMapRoute
                         )
-                        return
-                    } else if (response.body()!!.routes().size < 1) {
-                        Log.e(TAG, "No routes found")
-                        return
-                    }
-                    currentRoute = response.body()!!.routes()[0]
-
-                    // Draw the route on the map
-                    if (navigationMapRoute != null) {
-                        @Suppress("DEPRECATION")
-                        navigationMapRoute!!.removeRoute()
-                    } else {
-                        navigationMapRoute =
-                            NavigationMapRoute(
-                                null,
-                                mapView!!,
-                                mapboxMap!!,
-                                R.style.NavigationMapRoute
-                            )
-                    }
-                    navigationMapRoute!!.addRoute(currentRoute)
                 }
+                navigationMapRoute!!.addRoute(currentRoute)
+            }
 
-                @SuppressLint("LogNotTimber")
-                override fun onFailure(
-                    call: Call<DirectionsResponse?>,
-                    throwable: Throwable
-                ) {
-                    Log.e(TAG, "Error: " + throwable.message)
-                }
-            })
-    }
+        })
 
     private fun enableLocationComponent(loadedMapStyle: Style) {
         // Check if permissions are enabled and if not request
