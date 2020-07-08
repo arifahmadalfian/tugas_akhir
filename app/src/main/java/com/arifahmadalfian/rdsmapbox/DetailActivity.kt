@@ -3,7 +3,9 @@ package com.arifahmadalfian.rdsmapbox
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.*
+import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,9 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.database.Database
-import com.arifahmadalfian.rdsmapbox.model.Pelanggan
-import kotlinx.android.synthetic.main.item_row_pelanggan.*
 import java.util.*
+import java.util.Locale.getDefault
 
 class DetailActivity : AppCompatActivity() {
 
@@ -54,7 +55,9 @@ class DetailActivity : AppCompatActivity() {
         adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it) }
         recyclerView?.adapter = adapter
 
-        lokasiUser = Geocoder(this, Locale.getDefault())
+
+        lokasiUser = Geocoder(this, getDefault())
+
         longitudes = findViewById(R.id.tv_item_longitude)
         latitudes = findViewById(R.id.tv_item_latitude)
         //koordinat = "$longitudes,$latitudes"
@@ -68,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
 
             }
             R.id.btn_googlemaps -> {
-                val sLokasiUser = lokasiUser.toString().trim()
+                val sLokasiUser = lokasiUser
                 val sKoordinat = koordinat.toString().trim()
                 getGoogleMaps(sLokasiUser,sKoordinat)
 
@@ -76,7 +79,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getGoogleMaps(sLokasiUser: String, sKoordinat: String) {
+    private fun getGoogleMaps(sLokasiUser: Geocoder?, sKoordinat: String) {
         try {
             val uri = Uri.parse("https://www.google.co.in/maps/dir/$sLokasiUser/$sKoordinat")
             val intent = Intent(Intent.ACTION_VIEW, uri)
