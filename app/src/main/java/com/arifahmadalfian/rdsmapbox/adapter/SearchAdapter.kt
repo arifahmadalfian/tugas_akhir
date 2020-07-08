@@ -30,14 +30,6 @@ class SearchAdapter(var pelanggan: List<Pelanggan>): RecyclerView.Adapter<Search
 
         fun bind(pelanggan: Pelanggan) {
             with(itemView) {
-/*
-                Glide.with(itemView.context)
-                    .load(pelanggan.photo)
-                    .apply(RequestOptions().override(100,100))
-                    .into(tv_item_photo)
-
- */
-
                 val img = pelanggan.photo
                 val bm = BitmapFactory.decodeByteArray(img, 0, img.size)
                 tv_item_nama.text = pelanggan.nama
@@ -50,7 +42,6 @@ class SearchAdapter(var pelanggan: List<Pelanggan>): RecyclerView.Adapter<Search
                 tv_item_telepon.text = pelanggan.telepon
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {

@@ -193,7 +193,7 @@
             <Button
                 android:id="@+id/btn_mapbox"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="3dp"
@@ -205,12 +205,13 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_googlemaps"
                 app:layout_constraintHorizontal_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="getMapNavigation"/>
 
             <Button
                 android:id="@+id/btn_googlemaps"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="6dp"
@@ -220,7 +221,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_mapbox"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="getMapNavigation"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
