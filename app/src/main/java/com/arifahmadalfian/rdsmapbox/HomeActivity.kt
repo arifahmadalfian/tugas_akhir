@@ -2,20 +2,28 @@ package com.arifahmadalfian.rdsmapbox
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
-import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
-import androidx.annotation.Nullable
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
+import com.arifahmadalfian.rdsmapbox.database.Database
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener
+import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,16 +33,31 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.mancj.materialsearchbar.MaterialSearchBar
+import kotlinx.android.synthetic.main.mapbox_main.*
 
 
-class HomeActivity : FragmentActivity(),
-    OnMapReadyCallback,
-    ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
+    PopupMenu.OnMenuItemClickListener {
+
     private var mMap: GoogleMap? = null
     var mGoogleApiClient: GoogleApiClient? = null
     private val mLocationRequest: LocationRequest? = null
     private val mCurrLocationMarker: Marker? = null
     private var mLastLocation: Location? = null
+
+    var latitude: Double? = null
+    var longitude: Double? = null
+
+    var searchBar: MaterialSearchBar? = null
+
+    var recyclerView: RecyclerView? = null
+    var layoutManager: RecyclerView.LayoutManager? = null
+    var adapter: SearchAdapter? = null
+
+    var suggestList: List<String> = ArrayList()
+
+    var database: Database? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +67,109 @@ class HomeActivity : FragmentActivity(),
             supportFragmentManager
                 .findFragmentById(R.id.maps) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
+        recyclerView = findViewById(R.id.rv_pelanggan)
+        layoutManager = LinearLayoutManager(this)
+        recyclerView?.layoutManager = layoutManager
+        recyclerView?.setHasFixedSize(true)
+
+        getAppBarSearch()
+    }
+
+    private fun getAppBarSearch() {
+        searchBar = findViewById(R.id.appbar_search)
+
+        database = Database(this)
+
+        searchBar?.inflateMenu(R.menu.main_menu);
+        searchBar?.menu?.setOnMenuItemClickListener(this)
+
+        // saat pencarian di tekan maka sugesti dari nama pelanggan akan muncul
+        //val suggestList = database?.nama
+        //searchBar?.lastSuggestions = suggestList
+
+        val suggestListAlamat = database?.alamatdikirim
+        searchBar?.lastSuggestions = suggestListAlamat?.take(5)
+
+        searchBar?.addTextChangeListener(object: TextWatcher {
+            @SuppressLint("DefaultLocale")
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            @SuppressLint("DefaultLocale")
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            @SuppressLint("DefaultLocale")
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val suggest: MutableList<String> = ArrayList()
+                suggestListAlamat?.forEach { search ->
+                    if(search.toLowerCase().contains(searchBar?.text?.toLowerCase().toString())){
+                        suggest.add(search)
+                    }
+                }
+                searchBar?.lastSuggestions = suggest
+
+            }
+
+        })
+
+        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
+            override fun onButtonClicked(buttonCode: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSearchStateChanged(enabled: Boolean) {
+                if(!enabled) {
+                    recyclerView?.adapter = adapter
+                }
+            }
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                startSearch(text.toString())
+
+            }
+
+        })
+    }
+
+    private fun startSearch(text: String) {
+        if (text.isNotEmpty()){
+            val moveTextPelanggan = Intent(this@HomeActivity, DetailActivity::class.java)
+            moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, text)
+            moveTextPelanggan.putExtra(DetailActivity.EXTRA_LAT, latitude)
+            moveTextPelanggan.putExtra(DetailActivity.EXTRA_LNG, longitude)
+
+            startActivity(moveTextPelanggan)
+        }
+        else{
+            Toast.makeText(this@HomeActivity, "Pencarian tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getActionLogout() {
+        //list_main.visibility = View.GONE
+        mapbox_main.visibility = View.VISIBLE
+    }
+
+    private fun getActionAbout() {
+        val intent = Intent(this@HomeActivity,AboutActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_about -> {
+                Toast.makeText(this@HomeActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
+                getActionAbout()
+                return true
+            }
+            R.id.action_logout -> {
+                Toast.makeText(this@HomeActivity, " Ini action logout", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> false
+        }
     }
 
     /**
@@ -55,24 +181,18 @@ class HomeActivity : FragmentActivity(),
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    @SuppressLint("ObsoleteSdkInt")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
         //Memulai Google Play Services
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                buildGoogleApiClient()
-                mMap!!.isMyLocationEnabled = true
-            }
-        } else {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             buildGoogleApiClient()
-            mMap!!.isMyLocationEnabled = true
+            mMap?.isMyLocationEnabled = true
         }
     }
 
@@ -82,7 +202,7 @@ class HomeActivity : FragmentActivity(),
         mGoogleApiClient?.connect()
     }
 
-    override fun onConnected(@Nullable bundle: Bundle?) {
+    override fun onConnected(bundle: Bundle?) {
         val mLocationRequest = LocationRequest()
         mLocationRequest.interval = 1000
         mLocationRequest.fastestInterval = 1000
@@ -102,9 +222,13 @@ class HomeActivity : FragmentActivity(),
         }
     }
 
-    override fun onConnectionSuspended(i: Int) {}
+    override fun onConnectionSuspended(i: Int) {
 
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {}
+    }
+
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {
+
+    }
 
     override fun onLocationChanged(location: Location) {
         mLastLocation = location
@@ -114,35 +238,26 @@ class HomeActivity : FragmentActivity(),
                 location.latitude,
                 location.longitude
             )
-        val cameraPosition: CameraPosition = GoogleApiClient.Builder().target(
-            LatLng(
-                latLng.latitude,
-                latLng.longitude
-            )
-        ).zoom(16).build()
-        mMap!!.animateCamera(
+        val cameraPosition =
+            CameraPosition.Builder()
+                .target(LatLng(latLng.latitude, latLng.longitude))
+                .zoom(17f).build()
+        mMap?.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 cameraPosition
             )
         )
+
+        latitude = location.latitude
+        longitude = location.longitude
+
+        Toast.makeText(this@HomeActivity, "$latitude, $longitude", Toast.LENGTH_SHORT).show()
 
         //menghentikan pembaruan lokasi
         if (mGoogleApiClient != null) {
             @Suppress("DEPRECATION")
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
         }
-    }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onProviderEnabled(provider: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onProviderDisabled(provider: String?) {
-        TODO("Not yet implemented")
     }
 
     fun checkLocationPermission(): Boolean {
@@ -179,7 +294,7 @@ class HomeActivity : FragmentActivity(),
         grantResults: IntArray
     ) {
         when (requestCode) {
-            com.arifahmadalfian.rdsmapbox.HomeActivity.Companion.MY_PERMISSIONS_REQUEST_LOCATION -> {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
                 if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
@@ -194,7 +309,7 @@ class HomeActivity : FragmentActivity(),
                         if (mGoogleApiClient == null) {
                             buildGoogleApiClient()
                         }
-                        mMap!!.isMyLocationEnabled = true
+                        mMap?.isMyLocationEnabled = true
                     }
                 } else {
 

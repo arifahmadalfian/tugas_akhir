@@ -57,8 +57,7 @@ import retrofit2.Response
 
 
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener, OnMapClickListener,
-    PopupMenu.OnMenuItemClickListener {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener, OnMapClickListener {
     // variables for adding location layer
     private var mapView: MapView? = null
     private var mapboxMap: MapboxMap? = null
@@ -94,15 +93,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     private val LatLng.lng: Double
         get() = longitudes
 
-    var searchBar: MaterialSearchBar? = null
-
-    var recyclerView: RecyclerView? = null
-    var layoutManager: RecyclerView.LayoutManager? = null
-    var adapter: SearchAdapter? = null
-
-    var suggestList: List<String> = ArrayList()
-
-    var database: Database? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,81 +104,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
 
-        recyclerView = findViewById(R.id.rv_pelanggan)
-        layoutManager = LinearLayoutManager(this)
-        recyclerView?.layoutManager = layoutManager
-        recyclerView?.setHasFixedSize(true)
-
-        getAppBarSearch()
-
-    }
-
-    private fun getAppBarSearch() {
-        searchBar = findViewById(R.id.appbar_search)
-
-        database = Database(this)
-
-        searchBar?.inflateMenu(R.menu.main_menu);
-        searchBar?.menu?.setOnMenuItemClickListener(this)
-
-        // saat pencarian di tekan maka sugesti dari nama pelanggan akan muncul
-        //val suggestList = database?.nama
-        //searchBar?.lastSuggestions = suggestList
-
-        val suggestListAlamat = database?.alamatdikirim
-        searchBar?.lastSuggestions = suggestListAlamat?.take(5)
-
-        searchBar?.addTextChangeListener(object: TextWatcher{
-            @SuppressLint("DefaultLocale")
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            @SuppressLint("DefaultLocale")
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            @SuppressLint("DefaultLocale")
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val suggest: MutableList<String> = ArrayList()
-                suggestListAlamat?.forEach { search ->
-                    if(search.toLowerCase().contains(searchBar?.text?.toLowerCase().toString())){
-                        suggest.add(search)
-                    }
-                }
-                searchBar?.lastSuggestions = suggest
-
-            }
-
-        })
-
-        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
-            override fun onButtonClicked(buttonCode: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onSearchStateChanged(enabled: Boolean) {
-                if(!enabled) {
-                    recyclerView?.adapter = adapter
-                }
-            }
-
-            override fun onSearchConfirmed(text: CharSequence?) {
-                startSearch(text.toString())
-
-            }
-
-        })
-    }
-
-    private fun startSearch(text: String) {
-        if (text.isNotEmpty()){
-            val moveTextPelanggan = Intent(this@MainActivity, DetailActivity::class.java)
-            moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, text)
-            startActivity(moveTextPelanggan)
-        }
-        else{
-            Toast.makeText(this@MainActivity, "Pencarian tidak boleh kosong", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onMapReady(mapboxMap: MapboxMap) {
@@ -391,32 +306,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         super.onLowMemory()
         mapView?.onLowMemory()
     }
-
-    private fun getActionLogout() {
-        //list_main.visibility = View.GONE
-        mapbox_main.visibility = View.VISIBLE
-    }
-
-    private fun getActionAbout() {
-       val intent = Intent(this@MainActivity,AboutActivity::class.java)
-        startActivity(intent)
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.action_about -> {
-                Toast.makeText(this@MainActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
-                getActionAbout()
-                return true
-            }
-            R.id.action_logout -> {
-                Toast.makeText(this@MainActivity, " Ini action logout", Toast.LENGTH_SHORT).show()
-                return true
-            }
-            else -> false
-        }
-    }
-
 
 }
 

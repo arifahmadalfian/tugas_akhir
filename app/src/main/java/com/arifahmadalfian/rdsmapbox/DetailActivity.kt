@@ -3,9 +3,6 @@ package com.arifahmadalfian.rdsmapbox
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.*
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.database.Database
-import java.util.*
-import java.util.Locale.getDefault
 
 class DetailActivity : AppCompatActivity() {
 
     companion object {
         var Extra_pelanggan = "extra_pelanggan"
+        var EXTRA_LAT= "extra_lat"
+        var EXTRA_LNG= "extra_lng"
     }
 
     var recyclerView: RecyclerView? = null
@@ -30,13 +27,10 @@ class DetailActivity : AppCompatActivity() {
 
     var database: Database? = null
 
-    var lokasiUser: Geocoder? = null
+    var lokasiUser: String? = null
     var longitudes: TextView? = null
     var latitudes: TextView? = null
     var koordinat: String? = null
-
-    var lng: Double? = -6.949504
-    var lat: Double? = 107.585609
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +50,16 @@ class DetailActivity : AppCompatActivity() {
         recyclerView?.adapter = adapter
 
 
-        lokasiUser = Geocoder(this, getDefault())
+        val originLat = EXTRA_LAT
+        val originLng = EXTRA_LNG
+
+        lokasiUser = "$originLat, $originLng"
 
         longitudes = findViewById(R.id.tv_item_longitude)
         latitudes = findViewById(R.id.tv_item_latitude)
-        //koordinat = "$longitudes,$latitudes"
-        koordinat = "$lng,$lat"
+
+        koordinat = "$longitudes,$latitudes"
+
     }
 
 
@@ -71,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
 
             }
             R.id.btn_googlemaps -> {
-                val sLokasiUser = lokasiUser
+                val sLokasiUser = lokasiUser?.toDouble()
                 val sKoordinat = koordinat.toString().trim()
                 getGoogleMaps(sLokasiUser,sKoordinat)
 
@@ -79,7 +77,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getGoogleMaps(sLokasiUser: Geocoder?, sKoordinat: String) {
+    private fun getGoogleMaps(sLokasiUser: Double?, sKoordinat: String) {
         try {
             val uri = Uri.parse("https://www.google.co.in/maps/dir/$sLokasiUser/$sKoordinat")
             val intent = Intent(Intent.ACTION_VIEW, uri)
