@@ -46,16 +46,11 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
     private val mCurrLocationMarker: Marker? = null
     private var mLastLocation: Location? = null
 
-    var latitude: Double? = null
-    var longitude: Double? = null
-
     var searchBar: MaterialSearchBar? = null
 
     var recyclerView: RecyclerView? = null
     var layoutManager: RecyclerView.LayoutManager? = null
     var adapter: SearchAdapter? = null
-
-    var suggestList: List<String> = ArrayList()
 
     var database: Database? = null
 
@@ -137,9 +132,6 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         if (text.isNotEmpty()){
             val moveTextPelanggan = Intent(this@HomeActivity, DetailActivity::class.java)
             moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, text)
-            moveTextPelanggan.putExtra(DetailActivity.EXTRA_LAT, latitude)
-            moveTextPelanggan.putExtra(DetailActivity.EXTRA_LNG, longitude)
-
             startActivity(moveTextPelanggan)
         }
         else{
@@ -248,10 +240,7 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
             )
         )
 
-        latitude = location.latitude
-        longitude = location.longitude
-
-        Toast.makeText(this@HomeActivity, "$latitude, $longitude", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@HomeActivity, "Cari Toko Pelanggan", Toast.LENGTH_SHORT).show()
 
         //menghentikan pembaruan lokasi
         if (mGoogleApiClient != null) {

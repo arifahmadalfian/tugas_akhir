@@ -58,6 +58,8 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener, OnMapClickListener {
+
+
     // variables for adding location layer
     private var mapView: MapView? = null
     private var mapboxMap: MapboxMap? = null
@@ -73,25 +75,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     // variables needed to initialize navigation
     private var button: Button? = null
 
-    // variabel untuk mode menu
-    private var mode: Int = 0
-
-    //variabel untuk menu
-    private var menuToolbar: MenuItem? = null
-
     companion object {
         const val TAG = "DirectionsActivity"
-        var longitudes: Double = -6.949504
-        var latitudes: Double = 107.585609
+        var LATITUDES = "latitudes"
+        var LONGITUDES = "longitudes"
 
     }
 
-    //extension properties untuk mengubah variabel dari Point menjadi variabel local
-    private val LatLng.lat: Double
-        get() = latitudes
+    var intentLat: String? = null
+    var intentLng: String? = null
 
-    private val LatLng.lng: Double
-        get() = longitudes
+    //extension properties untuk mengubah variabel dari Point menjadi variabel local
+    //dan mengkonversi dari string ke double
+    private val LatLng.lat: Double?
+        get() = intentLat?.toDouble()
+
+    private val LatLng.lng: Double?
+        get() = intentLng?.toDouble()
+
+
 
 
 
@@ -103,6 +105,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         mapView = findViewById(R.id.mapView)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
+
+        intentLat = intent.getStringExtra(LATITUDES)
+        intentLng = intent.getStringExtra(LONGITUDES)
+
+
+        Toast.makeText(this@MainActivity," String: $intentLat,$intentLng", Toast.LENGTH_SHORT).show()
+
 
     }
 
@@ -146,8 +155,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     }
 
     override fun onMapClick(point: LatLng): Boolean {
+
         val destinationPoint =
-            Point.fromLngLat(point.lat ,point.lng )
+            Point.fromLngLat(
+                point.lng?: 0.0,
+                point.lat?: 0.0) //default 0.0
         val originPoint = Point.fromLngLat(
             locationComponent!!.lastKnownLocation!!.longitude,
             locationComponent!!.lastKnownLocation!!.latitude

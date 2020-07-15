@@ -7,7 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
@@ -17,8 +17,6 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         var Extra_pelanggan = "extra_pelanggan"
-        var EXTRA_LAT= "extra_lat"
-        var EXTRA_LNG= "extra_lng"
     }
 
     var recyclerView: RecyclerView? = null
@@ -27,10 +25,10 @@ class DetailActivity : AppCompatActivity() {
 
     var database: Database? = null
 
-    var lokasiUser: String? = null
-    var longitudes: TextView? = null
-    var latitudes: TextView? = null
     var koordinat: String? = null
+    var destLat: String? = null
+    var destLng: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,37 +47,45 @@ class DetailActivity : AppCompatActivity() {
         adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it) }
         recyclerView?.adapter = adapter
 
+        destLat = "-6.936855"
+        destLng = "107.575232"
+        koordinat = "$destLat,$destLng"
 
-        val originLat = EXTRA_LAT
-        val originLng = EXTRA_LNG
-
-        lokasiUser = "$originLat, $originLng"
-
-        longitudes = findViewById(R.id.tv_item_longitude)
-        latitudes = findViewById(R.id.tv_item_latitude)
-
-        koordinat = "$longitudes,$latitudes"
+        //ujicoba mengirim data intent
+        Toast.makeText(this@DetailActivity, "$koordinat", Toast.LENGTH_SHORT).show()
 
     }
 
 
+    //onClick dari xml layout detail_activity
     fun getMapNavigation(view: View){
         when(view.id){
             R.id.btn_mapbox -> {
-
+                val mDestlat = destLat
+                val mDestLng = destLng
+                getMapbox(mDestlat, mDestLng)
             }
             R.id.btn_googlemaps -> {
-                val sLokasiUser = lokasiUser?.toDouble()
-                val sKoordinat = koordinat.toString().trim()
-                getGoogleMaps(sLokasiUser,sKoordinat)
-
+                val gDestination = koordinat
+                getGoogleMaps(gDestination)
             }
         }
     }
 
-    private fun getGoogleMaps(sLokasiUser: Double?, sKoordinat: String) {
+    private fun getMapbox(mDestlat: String?, mDestLng: String?) {
         try {
-            val uri = Uri.parse("https://www.google.co.in/maps/dir/$sLokasiUser/$sKoordinat")
+            val intent = Intent(this@DetailActivity,MainActivity::class.java)
+            intent.putExtra(MainActivity.LATITUDES,mDestlat)
+            intent.putExtra(MainActivity.LONGITUDES,mDestLng)
+            startActivity(intent)
+        } catch (e: Exception){
+            Toast.makeText(this@DetailActivity,"Gagal Membuka Mapbox", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getGoogleMaps(gDestination: String?) {
+        try {
+            val uri = Uri.parse("https://www.google.co.in/maps/dir/?api=1&destination=$gDestination")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             intent.setPackage("com.google.android.apps.maps")
             intent.flags = FLAG_ACTIVITY_NEW_TASK
