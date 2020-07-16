@@ -10,10 +10,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arifahmadalfian.rdsmapbox.adapter.IOnPelangganItemClickListener
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.database.Database
+import com.arifahmadalfian.rdsmapbox.model.Pelanggan
+import kotlinx.android.synthetic.main.item_row_pelanggan.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
 
     companion object {
         var Extra_pelanggan = "extra_pelanggan"
@@ -25,9 +28,10 @@ class DetailActivity : AppCompatActivity() {
 
     var database: Database? = null
 
-    var koordinat: String? = null
-    var destLat: String? = null
-    var destLng: String? = null
+    private var koordinat: String? = null
+    private var destLat: String? = null
+    private var destLng: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,32 +48,9 @@ class DetailActivity : AppCompatActivity() {
         val pelanggan = intent.getStringExtra(Extra_pelanggan)
 
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it) }
+        adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it,this) }
         recyclerView?.adapter = adapter
 
-        destLat = "-6.936855"
-        destLng = "107.575232"
-        koordinat = "$destLat,$destLng"
-
-        //ujicoba mengirim data intent
-        Toast.makeText(this@DetailActivity, "$koordinat", Toast.LENGTH_SHORT).show()
-
-    }
-
-
-    //onClick dari xml layout detail_activity
-    fun getMapNavigation(view: View){
-        when(view.id){
-            R.id.btn_mapbox -> {
-                val mDestlat = destLat
-                val mDestLng = destLng
-                getMapbox(mDestlat, mDestLng)
-            }
-            R.id.btn_googlemaps -> {
-                val gDestination = koordinat
-                getGoogleMaps(gDestination)
-            }
-        }
     }
 
     private fun getMapbox(mDestlat: String?, mDestLng: String?) {
@@ -97,5 +78,41 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    override fun onItemclick(item: Pelanggan, position: Int) {
+        destLat = item.latitude.toString()
+        destLng = item.longitude.toString()
+        koordinat = "$destLat, $destLng"
 
+        Toast.makeText(this, item.nama, Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onButtonClick(position: Int) {
+        btn_mapbox.setOnClickListener {
+            val mDestlat = destLat
+            val mDestLng = destLng
+            getMapbox(mDestlat, mDestLng)
+        }
+        btn_googlemaps.setOnClickListener {
+            val gDestination = koordinat
+            getGoogleMaps(gDestination)
+        }
+
+        Toast.makeText(this, "$destLat, $destLng", Toast.LENGTH_SHORT).show()
+    }
+
+    //onClick dari xml layout detail_activity
+    fun getMapNavigation(view: View){
+        when(view.id){
+            R.id.btn_mapbox -> {
+                val mDestlat = destLat
+                val mDestLng = destLng
+                getMapbox(mDestlat, mDestLng)
+            }
+            R.id.btn_googlemaps -> {
+                val gDestination = koordinat
+                getGoogleMaps(gDestination)
+            }
+        }
+    }
 }
