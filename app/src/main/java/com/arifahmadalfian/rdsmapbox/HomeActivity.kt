@@ -40,6 +40,10 @@ import kotlinx.android.synthetic.main.mapbox_main.*
 class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
     PopupMenu.OnMenuItemClickListener {
 
+    companion object {
+        const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    }
+
     private var mMap: GoogleMap? = null
     var mGoogleApiClient: GoogleApiClient? = null
     private val mLocationRequest: LocationRequest? = null
@@ -214,13 +218,9 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         }
     }
 
-    override fun onConnectionSuspended(i: Int) {
+    override fun onConnectionSuspended(i: Int) {  }
 
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
-
-    }
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {  }
 
     override fun onLocationChanged(location: Location) {
         mLastLocation = location
@@ -310,7 +310,4 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         }
     }
 
-    companion object {
-        const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-    }
 }

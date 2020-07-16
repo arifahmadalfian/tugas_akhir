@@ -1,8 +1,6 @@
 package com.arifahmadalfian.rdsmapbox.adapter
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +8,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.arifahmadalfian.rdsmapbox.DetailActivity
 import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
-import com.bumptech.glide.request.transition.BitmapTransitionFactory
-import kotlinx.android.synthetic.main.item_row_pelanggan.view.*
 
 class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelangganItemClickListener): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
@@ -41,14 +38,13 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
         holder.telepon.text = pelanggan[position].telepon
 
         //holder.bind(pelanggan[position])
-
          */
         holder.initializeButton(pelanggan[position],clickListener)
     }
 
 
     inner class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        /*
         fun bind(pelanggan: Pelanggan) {
             with(itemView) {
                 val img = pelanggan.photo
@@ -61,10 +57,9 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
                 tv_item_keterangan.text = pelanggan.keterangan
                 tv_item_photo.setImageBitmap(bm)
                 tv_item_telepon.text = pelanggan.telepon
-
             }
         }
-
+         */
 
         var nama: TextView = itemView.findViewById(R.id.tv_item_nama)
         var alamatPemesan: TextView = itemView.findViewById(R.id.tv_item_alamat_pemesan)
@@ -95,10 +90,14 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
                 actions.onItemclick(pelanggan, adapterPosition)
             }
             btnMapbox.setOnClickListener {
-                actions.onButtonClick(adapterPosition)
+                actions.onItemclick(pelanggan, adapterPosition)
+                val detailActivity = DetailActivity
+                detailActivity.btnKode = "mapbox"
             }
             btnGoogleMaps.setOnClickListener {
-                actions.onButtonClick(adapterPosition)
+                actions.onItemclick(pelanggan, adapterPosition)
+                val detailActivity = DetailActivity
+                detailActivity.btnKode = "google"
             }
         }
     }
@@ -106,6 +105,5 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
 
 interface IOnPelangganItemClickListener{
     fun onItemclick(item: Pelanggan, position: Int)
-    fun onButtonClick(position: Int)
 }
 

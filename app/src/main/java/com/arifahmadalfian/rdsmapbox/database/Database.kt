@@ -16,6 +16,10 @@ class Database(context: Context?) : SQLiteAssetHelper(
 ) {
     val kontek: Context? = context
 
+    companion object {
+        private const val DB_NAME = "rds.db"
+        private const val DB_VER = 1
+    }
 
     val alamatdikirim: List<String>
         get() {
@@ -49,7 +53,6 @@ class Database(context: Context?) : SQLiteAssetHelper(
             )
             if(cursor.count != 0) {
                 while (cursor.moveToNext()){
-
                     val pelanggan = Pelanggan(
                         id = cursor.getInt(0),
                         nama = cursor.getString(1),
@@ -74,8 +77,4 @@ class Database(context: Context?) : SQLiteAssetHelper(
         return result
     }
 
-    companion object {
-        private const val DB_NAME = "rds.db"
-        private const val DB_VER = 1
-    }
 }

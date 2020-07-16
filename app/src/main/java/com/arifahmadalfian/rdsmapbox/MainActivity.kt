@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         const val TAG = "DirectionsActivity"
         var LATITUDES = "latitudes"
         var LONGITUDES = "longitudes"
-
     }
 
     var intentLat: String? = null
@@ -93,10 +92,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     private val LatLng.lng: Double?
         get() = intentLng?.toDouble()
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.mapbox_access))
@@ -109,9 +104,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         intentLat = intent.getStringExtra(LATITUDES)
         intentLng = intent.getStringExtra(LONGITUDES)
 
-
         Toast.makeText(this@MainActivity," String: $intentLat,$intentLng", Toast.LENGTH_SHORT).show()
-
 
     }
 

@@ -22,7 +22,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:theme="@style/AppTheme.PopupOverlay"
-            app:title="Detail Pelanggan" />
+            app:title="Detail Pelanggan"
+            app:titleTextColor="@color/mapboxWhite"
+            style="@style/AppTheme.AppBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
