@@ -20,16 +20,6 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
 
     companion object {
         var Extra_pelanggan = "extra_pelanggan"
-        /*
-        Kode untuk kondisi button
-        jika btnKode = default .....
-        jika btnKode = mapbox....
-        jika btnKode = google... -> onItemclick
-
-        inisial di kirim dari SearchAdapter
-        dari pilihan recycler klik position
-         */
-        var btnKode = "default"
     }
 
     var recyclerView: RecyclerView? = null
@@ -61,6 +51,33 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
 
     }
 
+    override fun onItemclick(item: Pelanggan, position: Int) {
+        Toast.makeText(this, item.nama, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onButtonMapboxClick(item: Pelanggan, position: Int) {
+        //mendapatkan data koordinat dari onitemclick button in recycler
+        destLat = item.latitude.toString()
+        destLng = item.longitude.toString()
+        koordinat = "$destLat, $destLng"
+
+        //button mapbox
+        val mDestlat = destLat
+        val mDestLng = destLng
+        getMapbox(mDestlat, mDestLng)
+    }
+
+    override fun onButtonGoogleMapsClick(item: Pelanggan, position: Int) {
+        //mendapatkan data koordinat dari onitemclick button in recycler
+        destLat = item.latitude.toString()
+        destLng = item.longitude.toString()
+        koordinat = "$destLat, $destLng"
+
+        //button google maps
+        val gDestination = koordinat
+        getGoogleMaps(gDestination)
+    }
+
     private fun getMapbox(mDestlat: String?, mDestLng: String?) {
         try {
             val intent = Intent(this@DetailActivity,MainActivity::class.java)
@@ -86,28 +103,4 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
         }
     }
 
-    override fun onItemclick(item: Pelanggan, position: Int) {
-        try {
-            //mendapatkan data koordinat dari onitemclick button in recycler
-            destLat = item.latitude.toString()
-            destLng = item.longitude.toString()
-            koordinat = "$destLat, $destLng"
-
-            if (btnKode == "mapbox"){
-                //button mapbox
-                val mDestlat = destLat
-                val mDestLng = destLng
-                getMapbox(mDestlat, mDestLng)
-            }
-            if (btnKode == "google"){
-                //button google maps
-                val gDestination = koordinat
-                getGoogleMaps(gDestination)
-            } else {
-                Toast.makeText(this, item.nama, Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception){
-            Toast.makeText(this@DetailActivity,"Gagal Membuka maps", Toast.LENGTH_SHORT).show()
-        }
-    }
 }

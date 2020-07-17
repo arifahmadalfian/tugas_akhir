@@ -90,14 +90,10 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
                 actions.onItemclick(pelanggan, adapterPosition)
             }
             btnMapbox.setOnClickListener {
-                actions.onItemclick(pelanggan, adapterPosition)
-                val detailActivity = DetailActivity
-                detailActivity.btnKode = "mapbox"
+                actions.onButtonMapboxClick(pelanggan, adapterPosition)
             }
             btnGoogleMaps.setOnClickListener {
-                actions.onItemclick(pelanggan, adapterPosition)
-                val detailActivity = DetailActivity
-                detailActivity.btnKode = "google"
+                actions.onButtonGoogleMapsClick(pelanggan, adapterPosition)
             }
         }
     }
@@ -105,5 +101,7 @@ class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelang
 
 interface IOnPelangganItemClickListener{
     fun onItemclick(item: Pelanggan, position: Int)
+    fun onButtonMapboxClick(item: Pelanggan, position: Int)
+    fun onButtonGoogleMapsClick(item: Pelanggan, position: Int)
 }
 

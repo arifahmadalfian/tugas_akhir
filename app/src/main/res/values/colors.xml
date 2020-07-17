@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF5722</color>
-    <color name="colorPrimaryDark">#E67930</color>
+    <color name="colorPrimary">#FBFBFB</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#4CAF50</color>
 
     <color name="mapboxWhite">#ffffff</color>
@@ -11,6 +11,11 @@
     <color name="mapboxPink">#ee4e8b</color>
     <color name="mapboxYellow">#d9d838</color>
 
+    <color name="btnMapbox">#0652DD</color>
+    <color name="btnMapsGoogle">#009432</color>
+
     <color name="red">#FF1100</color>
+
+    <color name="colorPrimaryText">#FF5722</color>
 
 </resources>
