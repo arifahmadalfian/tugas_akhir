@@ -14,23 +14,30 @@
         mapbox:mapbox_cameraTargetLng="-120.4194"
         mapbox:mapbox_cameraZoom="12" />
 
-    <Button
-        android:id="@+id/startButton"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimaryText"
-        android:enabled="false"
-        android:text="@string/start_navigation"
-        android:textColor="@color/colorPrimaryText"
-        android:textStyle="bold"
-        android:textSize="16sp"
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintEnd_toEndOf="parent"
         mapbox:layout_constraintHorizontal_bias="0.6"
-        mapbox:layout_constraintStart_toStartOf="parent" />
+        mapbox:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="3dp"
+            android:enabled="false"
+            android:text="@string/start_navigation"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
