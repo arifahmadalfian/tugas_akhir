@@ -22,5 +22,9 @@
     <string name="pt_ronadamar_sejahtera">PT Ronadamar Sejahtera</string>
     <string name="mapbox">Mapbox</string>
     <string name="google_maps">Google Maps</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_password">Password</string>
+    <string name="Login" />
+    <string name="username">Username</string>
 
 </resources>

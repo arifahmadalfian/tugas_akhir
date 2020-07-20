@@ -42,6 +42,9 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+        //check kondisi jika sudah login langsung ke home
+        //jika belum login akan di arahkan ke activiy login
+        var H_CHECK_USER_LOGIN = "false"
     }
 
     private var mMap: GoogleMap? = null
@@ -59,20 +62,31 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
     var database: Database? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
-        val mapFragment =
-            supportFragmentManager
-                .findFragmentById(R.id.maps) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
 
-        recyclerView = findViewById(R.id.rv_pelanggan)
-        layoutManager = LinearLayoutManager(this)
-        recyclerView?.layoutManager = layoutManager
-        recyclerView?.setHasFixedSize(true)
+        val staticCheck = intent.getBooleanExtra(H_CHECK_USER_LOGIN,false)
 
-        getAppBarSearch()
+        if (!staticCheck){
+            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this@HomeActivity, "Login", Toast.LENGTH_SHORT).show()
+        } else {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_home)
+
+            // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
+            val mapFragment =
+                supportFragmentManager
+                    .findFragmentById(R.id.maps) as SupportMapFragment?
+            mapFragment!!.getMapAsync(this)
+
+            recyclerView = findViewById(R.id.rv_pelanggan)
+            layoutManager = LinearLayoutManager(this)
+            recyclerView?.layoutManager = layoutManager
+            recyclerView?.setHasFixedSize(true)
+
+            getAppBarSearch()
+        }
+
     }
 
     private fun getAppBarSearch() {
@@ -126,7 +140,6 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 startSearch(text.toString())
-
             }
 
         })
@@ -161,7 +174,10 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
                 return true
             }
             R.id.action_logout -> {
-                Toast.makeText(this@HomeActivity, " Ini action logout", Toast.LENGTH_SHORT).show()
+                H_CHECK_USER_LOGIN = "false"
+                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(this@HomeActivity, " Berhasil Logout", Toast.LENGTH_SHORT).show()
                 return true
             }
             else -> false

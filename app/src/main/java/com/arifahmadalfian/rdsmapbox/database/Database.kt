@@ -71,10 +71,17 @@ class Database(context: Context?) : SQLiteAssetHelper(
                 return null
             }
         } else {
-            Toast.makeText(kontek, "Data tidak ada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(kontek, "Database tidak ada", Toast.LENGTH_SHORT).show()
             return null
         }
         return result
+    }
+
+    //cek login
+    fun checkLogin(username: String, password: String): Boolean{
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM user WHERE username = '$username' AND password = '$password'", null )
+        return cursor.count != 0
     }
 
 }
