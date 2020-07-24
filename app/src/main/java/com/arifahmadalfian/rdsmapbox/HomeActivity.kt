@@ -65,7 +65,7 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
         val staticCheck = intent.getBooleanExtra(H_CHECK_USER_LOGIN,false)
 
-        if (!staticCheck){
+        if (false){
             val intent = Intent(this@HomeActivity, LoginActivity::class.java)
             startActivity(intent)
             Toast.makeText(this@HomeActivity, "Login", Toast.LENGTH_SHORT).show()
