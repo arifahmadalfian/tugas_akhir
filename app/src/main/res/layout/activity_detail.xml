@@ -23,7 +23,7 @@
             android:background="?attr/colorPrimary"
             app:theme="@style/AppTheme.AppBar"
             app:title="Detail Pelanggan"
-            app:titleTextColor="@color/mapboxWhite"
+            app:titleTextColor="@color/colorPrimaryDark"
             style="@style/AppTheme.AppBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
