@@ -63,29 +63,21 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val staticCheck = intent.getBooleanExtra(H_CHECK_USER_LOGIN,false)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-        if (false){
-            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-            startActivity(intent)
-            Toast.makeText(this@HomeActivity, "Login", Toast.LENGTH_SHORT).show()
-        } else {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_home)
+        // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
+        val mapFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.maps) as SupportMapFragment?
+        mapFragment!!.getMapAsync(this)
 
-            // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
-            val mapFragment =
-                supportFragmentManager
-                    .findFragmentById(R.id.maps) as SupportMapFragment?
-            mapFragment!!.getMapAsync(this)
+        recyclerView = findViewById(R.id.rv_pelanggan)
+        layoutManager = LinearLayoutManager(this)
+        recyclerView?.layoutManager = layoutManager
+        recyclerView?.setHasFixedSize(true)
 
-            recyclerView = findViewById(R.id.rv_pelanggan)
-            layoutManager = LinearLayoutManager(this)
-            recyclerView?.layoutManager = layoutManager
-            recyclerView?.setHasFixedSize(true)
-
-            getAppBarSearch()
-        }
+        getAppBarSearch()
 
     }
 

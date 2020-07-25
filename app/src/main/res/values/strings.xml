@@ -24,7 +24,10 @@
     <string name="google_maps">Google</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_password">Password</string>
-    <string name="Login" />
+    <string name="Login">Login</string>
+    <string name="by">by arief ahmad alfian</string>
+    <string name="masuk">Masuk</string>
+    <string name="password">Password</string>
     <string name="username">Username</string>
 
 </resources>

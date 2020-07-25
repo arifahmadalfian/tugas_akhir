@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textColor="@android:color/black"
+            android:fontFamily="@font/gotham"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/text_keterangan"
@@ -47,6 +48,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="13dp"
             android:text="@string/jam_istirahat"
+            android:fontFamily="@font/calibri"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_nama" />
 
@@ -66,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
             android:text="@string/alamat_pemesan"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
@@ -86,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
             android:text="@string/alamat_dikirim"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_pemesan" />
@@ -107,6 +111,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:text="@string/latitude"
+            android:fontFamily="@font/calibri"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_dikirim" />
 
@@ -126,6 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
             android:text="@string/longitude"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_latitude" />
@@ -147,6 +153,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/calibri"
             android:text="@string/telepon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_longitude" />
@@ -184,11 +191,12 @@
                 android:layout_marginBottom="16dp"
                 android:layout_toEndOf="@+id/btn_googlemaps"
                 android:text="@string/mapbox"
-                android:textColor="@color/mapboxWhite"
+                android:fontFamily="@font/gotham"
+                android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textAllCaps="false"
-                android:backgroundTint="@color/btnMapbox"
+                android:background="@drawable/bg_btn_maps"
                 android:drawableTop="@drawable/ic_mapbox"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_googlemaps"
@@ -204,12 +212,13 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/gotham"
                 android:text="@string/google_maps"
-                android:textColor="@color/mapboxWhite"
+                android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textAllCaps="false"
-                android:backgroundTint="@color/btnMapsGoogle"
+                android:background="@drawable/bg_btn_maps"
                 android:drawableTop="@drawable/ic_google_maps"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -23,7 +23,8 @@
             android:background="?attr/colorPrimary"
             app:theme="@style/AppTheme.AppBar"
             app:title="Detail Pelanggan"
-            app:titleTextColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/gotham"
+            app:titleTextColor="@color/white"
             style="@style/AppTheme.AppBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>

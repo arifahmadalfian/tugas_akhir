@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#4264fb</color>
     <color name="colorPrimaryDark">#000000</color>
+    <color name="colorLoginPrimaryDark">#FA6C3F</color>
     <color name="colorAccent">#292929</color>
 
     <color name="mapboxWhite">#ffffff</color>
@@ -18,5 +19,6 @@
 
     <color name="colorPrimaryText">#FF5722</color>
     <color name="colorPrimaryScreen">#292929</color>
+    <color name="textInputLayout">#ECE5E5</color>
 
 </resources>
