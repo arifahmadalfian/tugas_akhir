@@ -46,4 +46,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    fun masuk(view: View) {}
+
 }
