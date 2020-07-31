@@ -1,7 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.arifahmadalfian.rdsmapbox
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -14,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +37,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.*
 import com.mancj.materialsearchbar.MaterialSearchBar
 import kotlinx.android.synthetic.main.mapbox_main.*
 
@@ -42,9 +48,6 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-        //check kondisi jika sudah login langsung ke home
-        //jika belum login akan di arahkan ke activiy login
-        var H_CHECK_USER_LOGIN = "false"
     }
 
     private var mMap: GoogleMap? = null
@@ -66,18 +69,10 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
-        val mapFragment =
-            supportFragmentManager
-                .findFragmentById(R.id.maps) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
-
-        recyclerView = findViewById(R.id.rv_pelanggan)
-        layoutManager = LinearLayoutManager(this)
-        recyclerView?.layoutManager = layoutManager
-        recyclerView?.setHasFixedSize(true)
-
-        getAppBarSearch()
+        //cek user sudah pernah masuk atau belum
+        //check kondisi jika sudah login langsung ke home
+        //jika belum login akan di arahkan ke activiy login
+        checkUserAccountSignIn()
 
     }
 
@@ -149,13 +144,38 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
     }
 
     private fun getActionLogout() {
-        //list_main.visibility = View.GONE
-        mapbox_main.visibility = View.VISIBLE
+        getInstance().signOut()
+        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        Toast.makeText(this@HomeActivity, " Berhasil Logout", Toast.LENGTH_SHORT).show()
     }
 
     private fun getActionAbout() {
         val intent = Intent(this@HomeActivity,AboutActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun checkUserAccountSignIn(){
+        if(getInstance().uid.isNullOrEmpty()){
+            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            Toast.makeText(this@HomeActivity, "Silahkan Login", Toast.LENGTH_SHORT).show()
+        } else {
+            // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
+            val mapFragment =
+                supportFragmentManager
+                    .findFragmentById(R.id.maps) as SupportMapFragment?
+            mapFragment!!.getMapAsync(this)
+
+            recyclerView = findViewById(R.id.rv_pelanggan)
+            layoutManager = LinearLayoutManager(this)
+            recyclerView?.layoutManager = layoutManager
+            recyclerView?.setHasFixedSize(true)
+
+            getAppBarSearch()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -166,10 +186,7 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
                 return true
             }
             R.id.action_logout -> {
-                H_CHECK_USER_LOGIN = "false"
-                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                startActivity(intent)
-                Toast.makeText(this@HomeActivity, " Berhasil Logout", Toast.LENGTH_SHORT).show()
+                getActionLogout()
                 return true
             }
             else -> false

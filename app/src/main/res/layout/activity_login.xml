@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/et_login_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableEnd="@drawable/ic_email_white_24dp"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/et_login_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableEnd="@drawable/ic_lock_white_24dp"
@@ -111,12 +111,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/btn_login_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/buttonshapewhitebg"
             android:fontFamily="@font/calibri"
-            android:onClick="masuk"
             android:text="@string/masuk"
             android:textAllCaps="false"
             android:textColor="#96ffffff"
