@@ -89,7 +89,7 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         //searchBar?.lastSuggestions = suggestList
 
         val suggestListAlamat = database?.alamatdikirim
-        searchBar?.lastSuggestions = suggestListAlamat?.take(5)
+        searchBar?.lastSuggestions = suggestListAlamat?.take(4)
 
         searchBar?.addTextChangeListener(object: TextWatcher {
             @SuppressLint("DefaultLocale")

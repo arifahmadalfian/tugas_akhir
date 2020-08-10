@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity(){
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-
+                    Toast.makeText(this@LoginActivity,"Username dan Password Salah",Toast.LENGTH_SHORT).show()
                 }
             }
     }
