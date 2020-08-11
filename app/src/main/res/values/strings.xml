@@ -28,7 +28,7 @@
     <string name="by">by arief ahmad alfian</string>
     <string name="masuk">Masuk</string>
     <string name="password">Password</string>
-    <string name="username">Username</string>
+    <string name="username">Email</string>
     <string name="loading" tools:ignore="TypographyEllipsis">Loading...</string>
     <string name="versi_1_0">Versi 1.0</string>
     <string name="tentang_aplikasi">Aplikasi ini dibuat untuk memenuhi salah satu syarat kelulusan

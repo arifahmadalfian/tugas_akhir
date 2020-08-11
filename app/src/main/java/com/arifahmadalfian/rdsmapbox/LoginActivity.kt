@@ -26,15 +26,22 @@ class LoginActivity : AppCompatActivity(){
         setContentView(R.layout.activity_login)
 
         btn_login_login.setOnClickListener {
-            //loading di jalankan
-            toProgresDialog()
+            val email = et_login_email.text.toString().trim()
+            val password = et_login_password.text.toString().trim()
 
-            loginToFirebase()
+            when {
+                email.isEmpty() -> et_login_email.error = "Email tidak boleh kosong"
+                password.isEmpty() -> et_login_password.error = "Password tidak boleh kosong"
+                else -> loginToFirebase()
+            }
+            //loading di jalankan
+            //toProgresDialog()
+
             //loading di hentikan
-            progresDialog?.dismiss()
+           // progresDialog?.dismiss()
         }
     }
-
+/*
     private fun toProgresDialog() {
         @Suppress("DEPRECATION")
         progresDialog = ProgressDialog(this)
@@ -44,6 +51,8 @@ class LoginActivity : AppCompatActivity(){
             android.R.color.transparent
         )
     }
+
+ */
 
     private fun loginToFirebase() {
 
@@ -57,6 +66,9 @@ class LoginActivity : AppCompatActivity(){
                 } else {
                     Toast.makeText(this@LoginActivity,"Username dan Password Salah",Toast.LENGTH_SHORT).show()
                 }
+            }
+            .addOnFailureListener{
+                Toast.makeText(this@LoginActivity,"Tidak terhubung internet",Toast.LENGTH_SHORT).show()
             }
     }
 
