@@ -19,6 +19,8 @@
 
     <color name="colorPrimaryText">#FF5722</color>
     <color name="colorPrimaryScreen">#292929</color>
-    <color name="textInputLayout">#ECE5E5</color>
+    <color name="textInputLayout">#040404</color>
+    <color name="textLayout">#8D040404</color>
+
 
 </resources>
