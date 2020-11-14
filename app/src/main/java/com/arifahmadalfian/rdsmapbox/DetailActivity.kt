@@ -46,7 +46,7 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
         val pelanggan = intent.getStringExtra(Extra_pelanggan)
 
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        adapter = database?.getPelangganByAlamat(pelanggan)?.let { SearchAdapter(it,this) }
+        adapter = pelanggan?.let { database?.getPelangganByAlamat(it)?.let { SearchAdapter(it,this) } }
         recyclerView?.adapter = adapter
 
     }

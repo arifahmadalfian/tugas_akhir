@@ -35,5 +35,7 @@
 Jenjang Diploma Tiga pada Progrm Studi Teknik Informatika
 STMIK Mardira Indonesia. Aplikasi tentang pencarian toko pelanggan berbasis android ini akan membantu karyawan/supir untuk pengiriman barang
 </string>
+    <string name="register">Register</string>
+    <string name="load">Loading</string>
 
 </resources>

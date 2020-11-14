@@ -14,6 +14,7 @@
 
     <color name="btnMapbox">#0fbcf9</color>
     <color name="btnMapsGoogle">#26de81</color>
+    <color name="colorCircleLoader">#4DEE5A24</color>
 
     <color name="red">#FF1100</color>
 
