@@ -1,6 +1,5 @@
 package com.arifahmadalfian.rdsmapbox
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
@@ -14,7 +13,9 @@ import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
+import com.arifahmadalfian.rdsmapbox.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
@@ -133,14 +134,34 @@ class RegisterActivity : AppCompatActivity() {
 
         uploadFirebase.putFile(PHOTO_URI!!)
             .addOnSuccessListener {
-                uploadFirebase.downloadUrl.addOnCompleteListener {
-                    register_loading.visibility = View.GONE
-                    Toast.makeText(this, "Berhasil Menambah Data", Toast.LENGTH_LONG).show()
-                    //register_profil.setImageBitmap(resources.getDrawable(R.drawable.images))
-                    et_register_nama.text = null
-                    et_register_email.text = null
-                    et_register_password.text = null
+                uploadFirebase.downloadUrl.addOnSuccessListener {
+
+                    // simpan ke database Firestore
+                    saveAllUserDataToDatabase(it.toString())
                 }
+
+            }
+    }
+
+    private fun saveAllUserDataToDatabase(photoUrl: String) {
+        val uid = FirebaseAuth.getInstance().uid
+        val db = FirebaseDatabase.getInstance().getReference("users/$uid")
+
+        db.setValue(User(
+            et_register_nama.text.toString(),
+            photoUrl,
+            et_register_email.text.toString()
+        ))
+            .addOnSuccessListener {
+                register_loading.visibility = View.GONE
+                Toast.makeText(this, "Berhasil Menambah Data", Toast.LENGTH_SHORT).show()
+                //register_profil.setImageBitmap(resources.getDrawable(R.drawable.images))
+                et_register_nama.text = null
+                et_register_email.text = null
+                et_register_password.text = null
+            }
+            .addOnFailureListener{
+
             }
     }
 }
