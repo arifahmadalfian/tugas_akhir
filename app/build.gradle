@@ -84,6 +84,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
     implementation 'com.google.firebase:firebase-auth:20.0.1'
     implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
 
     // Dot loader
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'

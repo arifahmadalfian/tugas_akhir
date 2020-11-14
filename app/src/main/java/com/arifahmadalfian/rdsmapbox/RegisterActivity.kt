@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,9 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -22,6 +25,7 @@ class RegisterActivity : AppCompatActivity() {
 
     var PICK_PHOTO = 100
     var PICK_CAMERA = 101
+    var PHOTO_URI: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,18 +84,18 @@ class RegisterActivity : AppCompatActivity() {
 
         if (requestCode == PICK_PHOTO){
             if (resultCode == Activity.RESULT_OK && data?.data != null) {
-                val selectedPhotoUri = data.data
+                PHOTO_URI = data.data
                 try {
-                    selectedPhotoUri?.let {
+                    PHOTO_URI?.let {
                         if(Build.VERSION.SDK_INT < 28) {
                             @Suppress("DEPRECATION")
                             val bitmap = MediaStore.Images.Media.getBitmap(
                                 this.contentResolver,
-                                selectedPhotoUri
+                                PHOTO_URI
                             )
                             register_profil.setImageBitmap(bitmap)
                         } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
+                            val source = ImageDecoder.createSource(this.contentResolver, PHOTO_URI!!)
                             val bitmap = ImageDecoder.decodeBitmap(source)
                             register_profil.setImageBitmap(bitmap)
                         }
@@ -110,15 +114,33 @@ class RegisterActivity : AppCompatActivity() {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(this, "Berhasil Menambah User", Toast.LENGTH_LONG).show()
+                    // upload photo
+                    uploadPhotoToFirebase()
                 } else {
                     Toast.makeText(this, "Gagal Menambah User", Toast.LENGTH_LONG).show()
+                    register_loading.visibility = View.GONE
                 }
-                register_loading.visibility = View.GONE
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Gagal Menambahkan Data", Toast.LENGTH_SHORT).show()
                 register_loading.visibility = View.GONE
+            }
+    }
+
+    private fun uploadPhotoToFirebase() {
+        val photoName = UUID.randomUUID().toString()
+        val uploadFirebase = FirebaseStorage.getInstance().getReference("rds/images/$photoName")
+
+        uploadFirebase.putFile(PHOTO_URI!!)
+            .addOnSuccessListener {
+                uploadFirebase.downloadUrl.addOnCompleteListener {
+                    register_loading.visibility = View.GONE
+                    Toast.makeText(this, "Berhasil Menambah Data", Toast.LENGTH_LONG).show()
+                    //register_profil.setImageBitmap(resources.getDrawable(R.drawable.images))
+                    et_register_nama.text = null
+                    et_register_email.text = null
+                    et_register_password.text = null
+                }
             }
     }
 }
