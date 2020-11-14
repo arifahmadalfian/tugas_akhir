@@ -88,5 +88,8 @@ dependencies {
     // Dot loader
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
 
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 
 }
