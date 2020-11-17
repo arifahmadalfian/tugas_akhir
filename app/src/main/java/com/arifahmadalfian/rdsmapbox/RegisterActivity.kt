@@ -12,6 +12,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
 import com.arifahmadalfian.rdsmapbox.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -143,13 +144,13 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveAllUserDataToDatabase(photoUrl: String) {
+    private fun saveAllUserDataToDatabase(photoUrl: String?) {
         val uid = FirebaseAuth.getInstance().uid
         val db = FirebaseDatabase.getInstance().getReference("users/$uid")
 
         db.setValue(User(
             et_register_nama.text.toString(),
-            photoUrl,
+            photoUrl!!,
             et_register_email.text.toString()
         ))
             .addOnSuccessListener {

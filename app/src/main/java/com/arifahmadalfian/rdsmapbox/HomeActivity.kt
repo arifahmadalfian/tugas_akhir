@@ -76,6 +76,28 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
 
     }
 
+    private fun checkUserAccountSignIn(){
+        if(getInstance().uid.isNullOrEmpty()){
+            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            Toast.makeText(this@HomeActivity, "Silahkan Login", Toast.LENGTH_SHORT).show()
+        } else {
+            // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
+            val mapFragment =
+                supportFragmentManager
+                    .findFragmentById(R.id.maps) as SupportMapFragment?
+            mapFragment!!.getMapAsync(this)
+
+            recyclerView = findViewById(R.id.rv_pelanggan)
+            layoutManager = LinearLayoutManager(this)
+            recyclerView?.layoutManager = layoutManager
+            recyclerView?.setHasFixedSize(true)
+
+            getAppBarSearch()
+        }
+    }
+
     private fun getAppBarSearch() {
         searchBar = findViewById(R.id.appbar_search)
 
@@ -143,41 +165,6 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         }
     }
 
-    private fun getActionLogout() {
-        getInstance().signOut()
-        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-        Toast.makeText(this@HomeActivity, " Berhasil Logout", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun getActionAbout() {
-        val intent = Intent(this@HomeActivity,AboutActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun checkUserAccountSignIn(){
-        if(getInstance().uid.isNullOrEmpty()){
-            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            Toast.makeText(this@HomeActivity, "Silahkan Login", Toast.LENGTH_SHORT).show()
-        } else {
-            // Memuat SupportMapFragment dan memberi notifikasi saat telah siap.
-            val mapFragment =
-                supportFragmentManager
-                    .findFragmentById(R.id.maps) as SupportMapFragment?
-            mapFragment!!.getMapAsync(this)
-
-            recyclerView = findViewById(R.id.rv_pelanggan)
-            layoutManager = LinearLayoutManager(this)
-            recyclerView?.layoutManager = layoutManager
-            recyclerView?.setHasFixedSize(true)
-
-            getAppBarSearch()
-        }
-    }
-
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.action_about -> {
@@ -189,8 +176,29 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
                 getActionLogout()
                 return true
             }
+            R.id.action_tambah -> {
+                getActionTambahPelanggan()
+                return true
+            }
             else -> false
         }
+    }
+
+    private fun getActionTambahPelanggan() {
+        TODO("Not yet implemented")
+    }
+
+    private fun getActionLogout() {
+        getInstance().signOut()
+        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        Toast.makeText(this@HomeActivity, " Berhasil Logout", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getActionAbout() {
+        val intent = Intent(this@HomeActivity,AboutActivity::class.java)
+        startActivity(intent)
     }
 
     /**

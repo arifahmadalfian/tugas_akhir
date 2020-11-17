@@ -13,6 +13,10 @@
         android:orderInCategory="102"
         android:title="@string/logout"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_tambah"
+        android:orderInCategory="103"
+        android:title="@string/tambah_pelanggan"
+        app:showAsAction="never" />
 
 </menu>
