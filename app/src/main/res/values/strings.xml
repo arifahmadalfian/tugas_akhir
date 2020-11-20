@@ -17,6 +17,7 @@
     <string name="alamat_pemesan">Alamat Pemesan</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="kordinat">Kordinat</string>
     <string name="telepon">Telepon</string>
     <string name="selesai">Selesai</string>
     <string name="pt_ronadamar_sejahtera">PT Ronadamar Sejahtera</string>
@@ -50,5 +51,7 @@ STMIK Mardira Indonesia. Aplikasi tentang pencarian toko pelanggan berbasis andr
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="tambah">Tambah</string>
+
 
 </resources>

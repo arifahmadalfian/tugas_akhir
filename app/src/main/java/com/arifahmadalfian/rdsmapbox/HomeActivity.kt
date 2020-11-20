@@ -185,7 +185,8 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
     }
 
     private fun getActionTambahPelanggan() {
-        TODO("Not yet implemented")
+        val intent = Intent(this@HomeActivity, ActivityTambahPelanggan::class.java)
+        startActivity(intent)
     }
 
     private fun getActionLogout() {
