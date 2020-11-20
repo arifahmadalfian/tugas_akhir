@@ -17,7 +17,7 @@
         <activity
             android:name=".activity.Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ActivityTambahPelanggan"
             android:theme="@style/EditScreenTextInputLayoutStyle"
             android:parentActivityName=".HomeActivity"/>
