@@ -14,17 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.AppBar"/>
+
         <activity
             android:name=".ActivityTambahPelanggan"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".HomeActivity"
             android:theme="@style/EditScreenTextInputLayoutStyle" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".LoginActivity"
             android:theme="@style/EditScreenTextInputLayoutStyle" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity"
+            android:theme="@style/AppTheme.AppBar"/>
         <activity android:name=".MapboxActivity" />
         <activity
             android:name=".LoginActivity"
@@ -32,7 +32,7 @@
         <activity
             android:name=".AboutActivity"
             android:theme="@style/AppTheme.AppBar"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".HomeActivity" />
         <activity android:name=".DetailActivity" />
         <activity
             android:name=".SplashScreenActivity"

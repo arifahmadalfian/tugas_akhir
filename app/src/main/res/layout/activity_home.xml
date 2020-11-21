@@ -12,20 +12,14 @@
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/appbar_search"
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/list_pelanggan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/bg_search"
-        android:elevation="5dp"
-        app:mt_hint="@string/cari"
-        app:mt_placeholder="@string/cari"
-        app:mt_placeholderColor="#B7000000"
-        app:mt_searchBarColor="@color/cardview_shadow_end_color"
-        app:mt_speechMode="false"
-        tools:ignore="PrivateResource" />
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/items_pelanggan" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

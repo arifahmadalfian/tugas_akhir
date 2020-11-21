@@ -3,21 +3,21 @@
 package com.arifahmadalfian.rdsmapbox
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,14 +37,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth.*
 import com.mancj.materialsearchbar.MaterialSearchBar
-import kotlinx.android.synthetic.main.mapbox_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 
 
-class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
-    PopupMenu.OnMenuItemClickListener {
+class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
@@ -94,65 +93,10 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
             recyclerView?.layoutManager = layoutManager
             recyclerView?.setHasFixedSize(true)
 
-            getAppBarSearch()
         }
     }
 
-    private fun getAppBarSearch() {
-        searchBar = findViewById(R.id.appbar_search)
 
-        database = Database(this)
-
-        searchBar?.inflateMenu(R.menu.main_menu);
-        searchBar?.menu?.setOnMenuItemClickListener(this)
-
-        // saat pencarian di tekan maka sugesti dari nama pelanggan akan muncul
-        //val suggestList = database?.nama
-        //searchBar?.lastSuggestions = suggestList
-
-        val suggestListAlamat = database?.alamatdikirim
-        searchBar?.lastSuggestions = suggestListAlamat?.take(4)
-
-        searchBar?.addTextChangeListener(object: TextWatcher {
-            @SuppressLint("DefaultLocale")
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            @SuppressLint("DefaultLocale")
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            @SuppressLint("DefaultLocale")
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val suggest: MutableList<String> = ArrayList()
-                suggestListAlamat?.forEach { search ->
-                    if(search.toLowerCase().contains(searchBar?.text?.toLowerCase().toString())){
-                        suggest.add(search)
-                    }
-                }
-                searchBar?.lastSuggestions = suggest
-
-            }
-
-        })
-
-        searchBar?.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener{
-            override fun onButtonClicked(buttonCode: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onSearchStateChanged(enabled: Boolean) {
-                if(!enabled) {
-                    recyclerView?.adapter = adapter
-                }
-            }
-
-            override fun onSearchConfirmed(text: CharSequence?) {
-                startSearch(text.toString())
-            }
-
-        })
-    }
 
     private fun startSearch(text: String) {
         if (text.isNotEmpty()){
@@ -165,22 +109,61 @@ class HomeActivity : FragmentActivity(), OnMapReadyCallback, ConnectionCallbacks
         }
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.action_about -> {
-                Toast.makeText(this@HomeActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
-                getActionAbout()
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.cari)
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //getDataSearch(query)
+
+                //kembali ke list kosong dan menjadalankan loading shimmer
+               // getListShimmer()
+
+                Toast.makeText(this@HomeActivity, query, Toast.LENGTH_SHORT).show()
                 return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+
+        })
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_search -> {
+                list_pelanggan.visibility = View.VISIBLE
+                maps.view?.visibility = View.GONE
+                true
             }
             R.id.action_logout -> {
                 getActionLogout()
-                return true
+                true
             }
             R.id.action_tambah -> {
                 getActionTambahPelanggan()
-                return true
+                true
             }
-            else -> false
+            R.id.action_about -> {
+                Toast.makeText(this@HomeActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
+                getActionAbout()
+                true
+            }
+            else -> {
+                list_pelanggan.visibility = View.GONE
+                maps.view?.visibility = View.VISIBLE
+                true
+            }
         }
     }
 

@@ -23,5 +23,9 @@
     <color name="textInputLayout">#040404</color>
     <color name="textLayout">#8D040404</color>
 
+    <color name="colorShimmer">#bbbbbb</color>
+    <color name="colorWhite">#F3F3F8</color>
+    <color name="colorBackground">#e5e7f3</color>
+
 
 </resources>
