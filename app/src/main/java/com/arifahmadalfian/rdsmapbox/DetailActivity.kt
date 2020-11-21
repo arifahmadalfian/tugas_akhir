@@ -6,7 +6,6 @@ import android.content.Intent.*
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,6 @@ import com.arifahmadalfian.rdsmapbox.adapter.IOnPelangganItemClickListener
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.database.Database
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
-import kotlinx.android.synthetic.main.item_row_pelanggan.*
 
 class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
 
@@ -80,9 +78,9 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
 
     private fun getMapbox(mDestlat: String?, mDestLng: String?) {
         try {
-            val intent = Intent(this@DetailActivity,MainActivity::class.java)
-            intent.putExtra(MainActivity.LATITUDES,mDestlat)
-            intent.putExtra(MainActivity.LONGITUDES,mDestLng)
+            val intent = Intent(this@DetailActivity,MapboxActivity::class.java)
+            intent.putExtra(MapboxActivity.LATITUDES,mDestlat)
+            intent.putExtra(MapboxActivity.LONGITUDES,mDestLng)
             startActivity(intent)
         } catch (e: Exception){
             Toast.makeText(this@DetailActivity,"Gagal Membuka Mapbox", Toast.LENGTH_SHORT).show()

@@ -51,7 +51,7 @@ class ActivityTambahPelanggan : AppCompatActivity() {
 
     private fun initView() {
         btn_tp_to_home.setOnClickListener {
-            val intent = Intent(this@ActivityTambahPelanggan, HomeActivity::class.java)
+            val intent = Intent(this@ActivityTambahPelanggan, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

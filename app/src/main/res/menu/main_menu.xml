@@ -4,6 +4,12 @@
     android:id="@+id/toolbar_actionbar">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/cari"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"/>
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="101"
         android:title="@string/about"
