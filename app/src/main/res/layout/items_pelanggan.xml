@@ -12,6 +12,7 @@
     android:layout_marginTop="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -51,6 +52,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
             android:textSize="14sp"
+            android:maxLines="5"
             android:background="@drawable/bg_shimmer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

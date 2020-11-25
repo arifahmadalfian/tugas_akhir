@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.arifahmadalfian.rdsmapbox
 
 import android.Manifest
@@ -13,16 +11,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.database.Database
+import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks
@@ -37,8 +34,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth.*
+import com.google.firebase.database.FirebaseDatabase
 import com.mancj.materialsearchbar.MaterialSearchBar
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -91,6 +88,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
             recyclerView = findViewById(R.id.rv_pelanggan)
             layoutManager = LinearLayoutManager(this)
             recyclerView?.layoutManager = layoutManager
+
+            val options: FirebaseRecyclerOptions<Pelanggan> = object : FirebaseRecyclerOptions.Builder<Pelanggan>()
+                .setQuery(FirebaseDatabase.getInstance().reference.child("pelanggan"), Pelanggan::class.java).build()
+
+            adapter = SearchAdapter(options)
+            recyclerView?.adapter = adapter
             recyclerView?.setHasFixedSize(true)
 
         }
@@ -100,9 +103,18 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
 
     private fun startSearch(text: String) {
         if (text.isNotEmpty()){
-            val moveTextPelanggan = Intent(this@HomeActivity, DetailActivity::class.java)
-            moveTextPelanggan.putExtra(DetailActivity.Extra_pelanggan, text)
-            startActivity(moveTextPelanggan)
+            val options: FirebaseRecyclerOptions<Pelanggan> = object : FirebaseRecyclerOptions.Builder<Pelanggan>()
+                .setQuery(
+                    FirebaseDatabase.getInstance()
+                        .reference
+                        .child("pelanggan")
+                        .orderByChild("alamatDikirim")
+                        .startAt("\uf8ff"+text)
+                        .endAt(text+"\uf8ff"), Pelanggan::class.java).build()
+
+            adapter = SearchAdapter(options)
+            adapter.startListening()
+            recyclerView?.adapter = adapter
         }
         else{
             Toast.makeText(this@HomeActivity, "Pencarian tidak boleh kosong", Toast.LENGTH_SHORT).show()
@@ -118,32 +130,34 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.cari)
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String): Boolean {
-                //getDataSearch(query)
-
-                //kembali ke list kosong dan menjadalankan loading shimmer
-               // getListShimmer()
-
-                Toast.makeText(this@HomeActivity, query, Toast.LENGTH_SHORT).show()
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isNotEmpty()) {
+                    list_pelanggan.visibility = View.VISIBLE
+                    maps.view?.visibility = View.GONE
+                    startSearch(newText)
+                } else {
+                    list_pelanggan.visibility = View.GONE
+                    maps.view?.visibility = View.VISIBLE
+                }
                 return false
             }
 
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                Toast.makeText(this@HomeActivity, query, Toast.LENGTH_SHORT).show()
+                return false
+            }
         })
 
         return true
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_search -> {
-                list_pelanggan.visibility = View.VISIBLE
-                maps.view?.visibility = View.GONE
+
                 true
             }
             R.id.action_logout -> {
@@ -183,6 +197,16 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
     private fun getActionAbout() {
         val intent = Intent(this@HomeActivity,AboutActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
     }
 
     /**

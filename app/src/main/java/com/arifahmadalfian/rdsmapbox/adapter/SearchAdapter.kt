@@ -12,7 +12,7 @@ import com.arifahmadalfian.rdsmapbox.DetailActivity
 import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 
-class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelangganItemClickListener): RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(var pelanggan: List<Pelanggan>, var clickListener: IOnPelangganItemClickListener): FirebaseRecyclerAdapter{
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val inflater = LayoutInflater.from(parent.context)
