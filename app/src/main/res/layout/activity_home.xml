@@ -12,6 +12,16 @@
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/data_tidak_ada"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:visibility="gone"
         android:id="@+id/list_pelanggan"

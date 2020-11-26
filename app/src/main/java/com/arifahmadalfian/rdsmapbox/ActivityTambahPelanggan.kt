@@ -13,7 +13,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
-import com.arifahmadalfian.rdsmapbox.model.PelangganNew
+import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -138,14 +138,14 @@ class ActivityTambahPelanggan : AppCompatActivity() {
         val db = FirebaseDatabase.getInstance().getReference("pelanggan/$uidPelanggan")
 
         db.setValue(
-            PelangganNew(
+            Pelanggan(
                 photo = photoUrl,
-                namaPelanggan = namaPelanggan,
-                jamIstirahat = jamIstirahat,
-                alamatPemesan = alamatPemesan,
-                alamatDikirim = alamatDikirim,
+                nama = namaPelanggan,
+                keterangan = jamIstirahat,
+                alamat_pemesan = alamatPemesan,
+                alamat_dikirim = alamatDikirim,
                 telepon = telepon,
-                kordinat = kordinat)
+                koordinat = kordinat)
         )
             .addOnSuccessListener {
                 tp_loading.visibility = View.GONE
