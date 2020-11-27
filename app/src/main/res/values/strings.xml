@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" >RDS Maps</string>
+    <string name="app_name">RDS Maps</string>
 
     <string name="mapbox_access" translatable="false">
         pk.eyJ1IjoiYXJpZmFobWFkYWxmaWFuIiwiYSI6ImNrYmVzc29kajBvbnAycW0yNDl0MTZvMWEifQ.AhBe0NApVwrYE1H4SNnP-A</string>
@@ -53,6 +53,9 @@ STMIK Mardira Indonesia. Aplikasi tentang pencarian toko pelanggan berbasis andr
     <string name="menu_slideshow">Slideshow</string>
     <string name="tambah">Tambah</string>
     <string name="data_tidak_ada">Data Tidak Ada</string>
+    <string name="admin">Admin</string>
+    <string name="pengirim">Pengirim</string>
+    <string name="halaman_utama">Halaman Utama</string>
 
 
 </resources>
