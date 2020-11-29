@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         btn_main_admin.setOnClickListener {
-            val intent = Intent(this@MainActivity, HomeActivity::class.java)
+            val intent = Intent(this@MainActivity, LoginAdminActivity::class.java)
             startActivity(intent)
         }
     }

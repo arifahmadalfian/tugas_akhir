@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_pelanggan">
+
+    <fragment
+        android:id="@+id/navigation_pelanggan"
+        android:name="com.arifahmadalfian.rdsmapbox.admin.ui.pelanggan.PelangganFragment"
+        android:label="@string/pelanggan"
+        tools:layout="@layout/fragment_pelanggan" />
+
+    <fragment
+        android:id="@+id/navigation_admin"
+        android:name="com.arifahmadalfian.rdsmapbox.admin.ui.admin.AdminFragment"
+        android:label="@string/admin"
+        tools:layout="@layout/fragment_admin" />
+
+    <fragment
+        android:id="@+id/navigation_pengirim"
+        android:name="com.arifahmadalfian.rdsmapbox.admin.ui.pengirim.PengirimFragment"
+        android:label="@string/pengirim"
+        tools:layout="@layout/fragment_pengirim" />
+</navigation>

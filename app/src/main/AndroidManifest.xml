@@ -14,14 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginAdminActivity"></activity>
+        <activity
+            android:name=".admin.AdminActivity"
+            android:label="@style/EditScreenTextInputLayoutStyleAdmin"/>
+        <activity
+            android:name=".LoginAdminActivity"
+            android:theme="@style/EditScreenTextInputLayoutStyle" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/EditScreenTextInputLayoutStyle" />
-        <activity
-            android:name=".ActivityTambahPelanggan"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/EditScreenTextInputLayoutStyle" />
+
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".LoginActivity"

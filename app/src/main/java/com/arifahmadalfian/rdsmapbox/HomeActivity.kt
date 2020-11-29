@@ -157,10 +157,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
                 getActionLogout()
                 true
             }
-            R.id.action_tambah -> {
-                getActionTambahPelanggan()
-                true
-            }
             R.id.action_about -> {
                 Toast.makeText(this@HomeActivity, " Tentang Aplikasi", Toast.LENGTH_SHORT).show()
                 getActionAbout()
@@ -171,11 +167,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
                 true
             }
         }
-    }
-
-    private fun getActionTambahPelanggan() {
-        val intent = Intent(this@HomeActivity, ActivityTambahPelanggan::class.java)
-        startActivity(intent)
     }
 
     private fun getActionLogout() {

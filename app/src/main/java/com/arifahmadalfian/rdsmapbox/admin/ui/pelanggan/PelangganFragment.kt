@@ -1,26 +1,29 @@
-package com.arifahmadalfian.rdsmapbox
+package com.arifahmadalfian.rdsmapbox.admin.ui.pelanggan
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
+import com.arifahmadalfian.rdsmapbox.R
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_tambah_pelanggan.*
+import kotlinx.android.synthetic.main.fragment_pelanggan.*
 import java.util.*
 
-class ActivityTambahPelanggan : AppCompatActivity() {
+class PelangganFragment : Fragment() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
 
@@ -28,33 +31,38 @@ class ActivityTambahPelanggan : AppCompatActivity() {
     private var PICK_CAMERA = 101
     private var PHOTO_URI: Uri? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tambah_pelanggan)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_pelanggan, container, false)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // menambahkan circle loader/loading
-        val tashie = TashieLoader(
-            this, 5,
-            30, 10,
-            ContextCompat.getColor(this, R.color.colorLoginPrimaryDark))
-            .apply {
-                animDuration = 500
-                animDelay = 50
-                interpolator = LinearInterpolator()
-            }
+        val tashie = context?.let { ContextCompat.getColor(it, R.color.colorLoginPrimaryDark) }?.let {
+            TashieLoader(
+                context, 5,
+                30, 10,
+                it
+            )
+                .apply {
+                    animDuration = 500
+                    animDelay = 50
+                    interpolator = LinearInterpolator()
+                }
+        }
         tp_loading.addView(tashie)
         tp_loading.visibility = View.GONE
 
         initView()
-
     }
 
     private fun initView() {
-        btn_tp_to_home.setOnClickListener {
-            val intent = Intent(this@ActivityTambahPelanggan, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         tp_image.setOnClickListener {
             getPickPhotoFromPhone()
@@ -149,7 +157,7 @@ class ActivityTambahPelanggan : AppCompatActivity() {
         )
             .addOnSuccessListener {
                 tp_loading.visibility = View.GONE
-                Toast.makeText(this, "Berhasil Menambah Data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Berhasil Menambah Data", Toast.LENGTH_SHORT).show()
 
                 et_nama_pelanggan.text = null
                 et_jam_istirahat.text = null
@@ -160,7 +168,7 @@ class ActivityTambahPelanggan : AppCompatActivity() {
             }
             .addOnFailureListener{
                 tp_loading.visibility = View.GONE
-                Toast.makeText(this, "Gagal Menambah Data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gagal Menambah Data", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -181,13 +189,16 @@ class ActivityTambahPelanggan : AppCompatActivity() {
                         if(Build.VERSION.SDK_INT < 28) {
                             @Suppress("DEPRECATION")
                             val bitmap = MediaStore.Images.Media.getBitmap(
-                                this.contentResolver,
+                                activity?.contentResolver,
                                 PHOTO_URI
                             )
                             tp_image.setImageBitmap(bitmap)
                         } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, PHOTO_URI!!)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val source = activity?.contentResolver?.let { it1 ->
+                                ImageDecoder.createSource(
+                                    it1, PHOTO_URI!!)
+                            }
+                            val bitmap = source?.let { it1 -> ImageDecoder.decodeBitmap(it1) }
                             tp_image.setImageBitmap(bitmap)
                         }
                     }
