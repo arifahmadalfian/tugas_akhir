@@ -12,9 +12,8 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import com.agrawalsuneet.dotsloader.loaders.TashieLoader
-import com.arifahmadalfian.rdsmapbox.model.User
+import com.arifahmadalfian.rdsmapbox.model.Pengirim
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -148,7 +147,7 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid
         val db = FirebaseDatabase.getInstance().getReference("users/$uid")
 
-        db.setValue(User(
+        db.setValue(Pengirim(
             et_register_nama.text.toString(),
             photoUrl!!,
             et_register_email.text.toString()

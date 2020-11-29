@@ -62,7 +62,7 @@
                 app:tashieloader_noOfDots="6" />
 
             <ImageView
-                android:id="@+id/tp_image_pengirim"
+                android:id="@+id/img_pengirim"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
@@ -85,7 +85,7 @@
                 app:layout_constraintBottom_toTopOf="@id/textInputLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tp_image_pengirim">
+                app:layout_constraintTop_toBottomOf="@id/img_pengirim">
 
                 <EditText
                     android:id="@+id/et_nama_pengirim"
@@ -229,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textInputLayout4">
 
                 <Button
-                    android:id="@+id/btn_tp_tambah"
+                    android:id="@+id/btn_tambah_pengirim"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/buttonshapewhitebg"
