@@ -68,6 +68,7 @@ STMIK Mardira Indonesia. Aplikasi tentang pencarian toko pelanggan berbasis andr
     <string name="alamat">Alamat</string>
     <string name="tambah_admin">Tambah Admin</string>
     <string name="nama_admin">Nama Admin</string>
+    <string name="detail_pelanggan">Detail Pelanggan</string>
 
 
 </resources>

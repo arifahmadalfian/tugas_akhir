@@ -44,11 +44,6 @@ class LoginActivity : AppCompatActivity(){
 
         }
 
-        btn_login_to_register.setOnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 
     private fun loginToFirebase() {

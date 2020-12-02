@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.arifahmadalfian.rdsmapbox.adapter.IOnPelangganItemClickListener
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.activity_detail.*
 
-class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
+class DetailActivity : AppCompatActivity() {
 
     companion object {
         var Extra_pelanggan = "extra_pelanggan"
@@ -30,35 +32,23 @@ class DetailActivity : AppCompatActivity(), IOnPelangganItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val pelanggan = intent.getStringExtra(Extra_pelanggan)
+        val pelanggan: Pelanggan? = intent.getParcelableExtra(Extra_pelanggan)
 
-    }
+        Glide.with(this)
+            .load(pelanggan?.photo)
+            .apply(RequestOptions().override(300, 250))
+            .into(tv_item_photo)
+        tv_item_nama.text = pelanggan?.nama
+        tv_item_alamat_pemesan.text = pelanggan?.alamat_pemesan
+        tv_item_alamat_dikirim.text = pelanggan?.alamat_dikirim
+        tv_item_keterangan.text = pelanggan?.keterangan
+        tv_item_koordinat.text = pelanggan?.koordinat
+        tv_item_telepon.text = pelanggan?.telepon
 
-    override fun onItemclick(item: Pelanggan, position: Int) {
-        Toast.makeText(this, item.nama, Toast.LENGTH_SHORT).show()
-    }
+        btn_googlemaps.setOnClickListener {
+            getGoogleMaps(tv_item_koordinat.text.toString())
+        }
 
-    override fun onButtonMapboxClick(item: Pelanggan, position: Int) {
-        //mendapatkan data koordinat dari onitemclick button in recycler
-        //destLat = item.latitude.toString()
-        //destLng = item.longitude.toString()
-        //koordinat = "$destLat, $destLng"
-
-        //button mapbox
-        val mDestlat = destLat
-        val mDestLng = destLng
-        getMapbox(mDestlat, mDestLng)
-    }
-
-    override fun onButtonGoogleMapsClick(item: Pelanggan, position: Int) {
-        //mendapatkan data koordinat dari onitemclick button in recycler
-        //destLat = item.latitude.toString()
-        //destLng = item.longitude.toString()
-        //koordinat = "$destLat, $destLng"
-
-        //button google maps
-        val gDestination = koordinat
-        getGoogleMaps(gDestination)
     }
 
     private fun getMapbox(mDestlat: String?, mDestLng: String?) {

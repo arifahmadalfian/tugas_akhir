@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arifahmadalfian.rdsmapbox.adapter.IOnPelangganItemClickListener
 import com.arifahmadalfian.rdsmapbox.adapter.SearchAdapter
 import com.arifahmadalfian.rdsmapbox.model.Pelanggan
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -38,7 +39,8 @@ import com.google.firebase.auth.FirebaseAuth.*
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
+class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
+    IOnPelangganItemClickListener{
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
@@ -91,7 +93,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
                     )
                     .build()
 
-            adapter = SearchAdapter(options)
+            adapter = SearchAdapter(options, this)
             recyclerView?.adapter = adapter
 
         }
@@ -110,7 +112,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
             ).build()
 
         tv_null.visibility = View.VISIBLE
-        adapter = SearchAdapter(options)
+        adapter = SearchAdapter(options, this)
         adapter?.startListening()
         recyclerView?.adapter = adapter
 
@@ -332,6 +334,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback, ConnectionCallback
                 return
             }
         }
+    }
+
+    override fun onItemclick(item: Pelanggan, position: Int) {
+        val intent = Intent(this@HomeActivity, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.Extra_pelanggan, item)
+        startActivity(intent)
     }
 
 }

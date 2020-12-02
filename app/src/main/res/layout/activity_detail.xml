@@ -3,41 +3,221 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_cardview_detail"
+    android:layout_height="wrap_content"
     tools:context=".DetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <LinearLayout
+        android:id="@+id/tp_linearLayout_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryText"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_toolbar"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="32dp"
+            android:text="@string/detail_pelanggan"
+            android:fontFamily="@font/calibri"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageView
+            android:id="@+id/tv_item_photo"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#fa8231"
-            app:theme="@style/AppTheme.AppBar"
-            app:title="Detail Pelanggan"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tp_linearLayout_detail"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/images"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_item_nama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/gotham"
-            app:titleTextColor="@color/white"
-            style="@style/AppTheme.AppBar"/>
+            android:textColor="@android:color/black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/text_keterangan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_photo"
+            tools:text="@string/nama_pelanggan" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/text_keterangan"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="13dp"
+            android:text="@string/jam_istirahat"
+            android:fontFamily="@font/calibri"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_nama" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pelanggan"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        tools:listitem="@layout/item_row_pelanggan" />
+        <TextView
+            android:id="@+id/tv_item_keterangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/jam_istirahat"
+            style="@style/StylePrimaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_nama" />
+
+        <TextView
+            android:id="@+id/text_alamat_pemesan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
+            android:text="@string/alamat_pemesan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
+
+        <TextView
+            android:id="@+id/tv_item_alamat_pemesan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alamat_pemesan"
+            style="@style/StylePrimaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/text_keterangan" />
+
+        <TextView
+            android:id="@+id/text_alamat_dikirim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
+            android:text="@string/alamat_dikirim"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_pemesan" />
+
+        <TextView
+            android:id="@+id/tv_item_alamat_dikirim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alamat_dikirim"
+            style="@style/StylePrimaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_pemesan" />
+
+
+        <TextView
+            android:id="@+id/text_koordinat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/calibri"
+            android:text="@string/kordinat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/tv_item_koordinat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/kordinat"
+            style="@style/StylePrimaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_alamat_dikirim" />
+
+        <TextView
+            android:id="@+id/text_telepon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/calibri"
+            android:text="@string/telepon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_koordinat" />
+
+        <TextView
+            android:id="@+id/tv_item_telepon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/telepon"
+            style="@style/StylePrimaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_koordinat" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="134dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_telepon">
+
+            <Button
+                android:id="@+id/btn_mapbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="16dp"
+                android:layout_toEndOf="@+id/btn_googlemaps"
+                android:text="@string/mapbox"
+                android:fontFamily="@font/gotham"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_btn_maps"
+                android:drawableTop="@drawable/ic_mapbox"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_googlemaps"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_googlemaps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/gotham"
+                android:text="@string/google_maps"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_btn_maps"
+                android:drawableTop="@drawable/ic_google_maps"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_mapbox"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

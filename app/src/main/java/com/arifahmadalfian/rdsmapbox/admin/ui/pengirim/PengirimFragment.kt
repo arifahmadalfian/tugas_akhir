@@ -24,7 +24,6 @@ import com.arifahmadalfian.rdsmapbox.model.Pengirim
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_pelanggan.*
 import kotlinx.android.synthetic.main.fragment_pengirim.*
 import java.util.*

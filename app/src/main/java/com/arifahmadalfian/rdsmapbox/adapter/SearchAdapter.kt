@@ -13,7 +13,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SearchAdapter(
-    options: FirebaseRecyclerOptions<Pelanggan>
+    options: FirebaseRecyclerOptions<Pelanggan>,
+    var clickListener: IOnPelangganItemClickListener
 ): FirebaseRecyclerAdapter<Pelanggan, SearchAdapter.SearchViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -31,6 +32,12 @@ class SearchAdapter(
         var keterangan: TextView? = null
         var telepon: TextView? = null
         var photo: CircleImageView = itemView.findViewById(R.id.img_pelanggan)
+
+        fun bind(action: Pelanggan, position: Int) {
+            itemView.setOnClickListener {
+                clickListener.onItemclick(action, position)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int, model: Pelanggan) {
@@ -44,13 +51,13 @@ class SearchAdapter(
         Glide.with(holder.photo.context)
             .load(model.photo)
             .into(holder.photo)
+
+        holder.bind(model, position)
     }
 
 }
 
 interface IOnPelangganItemClickListener{
     fun onItemclick(item: Pelanggan, position: Int)
-    fun onButtonMapboxClick(item: Pelanggan, position: Int)
-    fun onButtonGoogleMapsClick(item: Pelanggan, position: Int)
 }
 
